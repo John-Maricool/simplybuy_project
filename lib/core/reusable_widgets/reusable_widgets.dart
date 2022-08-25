@@ -16,9 +16,11 @@ Widget authButtons(
       ));
 }
 
-InputDecoration customInputDecoration({String? hint, String? label}) {
+InputDecoration customInputDecoration(
+    {String? hint, String? label, String? errorText}) {
   return InputDecoration(
       hintText: hint,
+      errorText: errorText,
       labelText: label,
       enabledBorder: const OutlineInputBorder(
         borderSide: BorderSide(width: 1, color: blackColor),

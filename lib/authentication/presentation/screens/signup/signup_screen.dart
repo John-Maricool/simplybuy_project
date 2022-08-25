@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:simplibuy/authentication/presentation/screen_model_controllers/login_screen_binding.dart';
 import 'package:simplibuy/core/reusable_widgets/reusable_widgets.dart';
 import 'package:simplibuy/core/constant.dart';
-
-import '../login/login_screen.dart';
+import '../login/login_page.dart';
 
 class SignUpForm extends StatelessWidget {
   const SignUpForm({
@@ -66,7 +66,7 @@ class SignUpForm extends StatelessWidget {
                       text: "Already have an account?",
                       clickableText: " Sign in",
                       onClicked: () {
-                        Get.to(const LoginForm());
+                        Get.to(LoginPage(), binding: LoginScreenBinding());
                       })
                 ],
               ),

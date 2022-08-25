@@ -5,6 +5,7 @@ import 'package:simplibuy/authentication/presentation/screens/forgot_password/fo
 import 'package:simplibuy/authentication/presentation/screens/signup/signup_screen.dart';
 import 'package:simplibuy/core/reusable_widgets/reusable_widgets.dart';
 import 'package:simplibuy/core/constant.dart';
+import '../../screen_model_controllers/login_screen_controller.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({
@@ -13,9 +14,12 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LoginScreenController bloc = Get.find(); // like this!
+
     return Scaffold(
         bottomNavigationBar: BottomAppBar(
           color: Colors.transparent,
+          elevation: 0,
           child: Container(
             child: ordinaryAndClickableText(
                 text: "New here?",
@@ -24,7 +28,6 @@ class LoginForm extends StatelessWidget {
                   Get.to(const SignUpForm());
                 }),
           ),
-          elevation: 0,
         ),
         body: Container(
           margin: const EdgeInsets.all(defaultPadding),
@@ -43,11 +46,11 @@ class LoginForm extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.only(top: defaultPadding),
                 ),
-                emailField(),
+                emailField(bloc),
                 const Padding(
                   padding: EdgeInsets.only(top: defaultPadding),
                 ),
-                passwordField(),
+                passwordField(bloc),
                 const Padding(
                   padding: EdgeInsets.only(top: defaultPadding),
                 ),
@@ -57,7 +60,7 @@ class LoginForm extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.only(top: defaultPadding),
                 ),
-                submitButton(),
+                submitButton(bloc),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -98,22 +101,27 @@ class LoginForm extends StatelessWidget {
         ));
   }
 
-  Widget emailField() {
+  Widget emailField(LoginScreenController bloc) {
     return Column(children: [
       const Align(
         alignment: Alignment.bottomLeft,
         child: Text("Email",
             style: TextStyle(color: blackColor, fontSize: smallerTextFontSize)),
       ),
-      StreamBuilder(builder: (context, snapshot) {
-        return TextFormField(
-            keyboardType: TextInputType.emailAddress,
-            decoration: customInputDecoration(hint: 'example@email.com'));
-      })
+      StreamBuilder(
+          stream: bloc.getEmailStream(),
+          builder: (context, snapshot) {
+            return TextField(
+                onChanged: bloc.changeEmail,
+                keyboardType: TextInputType.emailAddress,
+                decoration: customInputDecoration(
+                    hint: 'example@email.com',
+                    errorText: snapshot.error as String?));
+          })
     ]);
   }
 
-  Widget passwordField() {
+  Widget passwordField(LoginScreenController bloc) {
     return Column(
       children: [
         const Align(
@@ -123,21 +131,33 @@ class LoginForm extends StatelessWidget {
                   TextStyle(color: blackColor, fontSize: smallerTextFontSize)),
         ),
         StreamBuilder(
+          stream: bloc.getPasswordStream(),
           builder: (context, snapshot) {
-            return TextFormField(
+            return TextField(
+                onChanged: bloc.changePassword,
                 obscureText: true,
                 keyboardType: TextInputType.visiblePassword,
-                decoration: customInputDecoration(hint: "khbh%klna"));
+                decoration: customInputDecoration(
+                    hint: "1234450", errorText: snapshot.error as String?));
           },
         )
       ],
     );
   }
 
-  Widget submitButton() {
+  Widget submitButton(LoginScreenController bloc) {
     return StreamBuilder(
+      stream: bloc.submitValid(),
       builder: (context, snapshot) {
-        return authButtons(pressed: () {}, text: "Sign in");
+        return authButtons(
+            pressed: () {
+              snapshot.hasData
+                  ? () {
+                      bloc.loginInUser();
+                    }
+                  : null;
+            },
+            text: "Sign in");
       },
     );
   }

@@ -1,19 +1,19 @@
 import 'package:either_dart/either.dart';
+import 'package:simplibuy/authentication/domain/entities/signup_details.dart';
 import 'package:simplibuy/authentication/domain/repositories/auth_repository.dart';
 import '../../../core/failure/failure.dart';
 import '../../../core/result/result.dart';
-import '../entities/login_details.dart';
 
-class LoginUsecase {
+class SignupUsecase {
   final AuthRepository repository;
-  LoginUsecase(this.repository);
+  SignupUsecase(this.repository);
 
   Future<Either<Failure, Result<String>>> authenticateWithFacebook() async {
     return repository.authenticateWithFacebook();
   }
 
   Future<Either<Failure, Result<String>>> sendAuthDetails(
-      LoginDetail detail) async {
+      SignupDetail detail) async {
     return repository.sendAuthDetails(detail);
   }
 

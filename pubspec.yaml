@@ -31,6 +31,12 @@ dependencies:
   flutter_signin_button: ^2.0.0
   material_design_icons_flutter: ^5.0.6996
   get: ^4.6.5
+  rxdart: ^0.27.5
+  bloc: ^8.1.0
+  either_dart: ^0.2.0
+  internet_connection_checker: ^0.0.1+4
+  connectivity_plus: ^2.3.0
+
 
 
   #either: ^0.1.8
