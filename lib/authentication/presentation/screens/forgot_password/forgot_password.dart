@@ -57,7 +57,7 @@ class ForgotPassword extends StatelessWidget {
   Widget submitButton() {
     return StreamBuilder(
       builder: (context, snapshot) {
-        return authButtons(pressed: () {}, text: "Send code");
+        return defaultButtons(pressed: () {}, text: "Send code");
       },
     );
   }

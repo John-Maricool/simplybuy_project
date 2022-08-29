@@ -1,12 +1,17 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:simplibuy/authentication/presentation/screen_model_controllers/login_screen_binding.dart';
+import 'package:simplibuy/authentication/presentation/screen_model_controllers/signup_screen_controller.dart';
+import 'package:simplibuy/core/constants/route_constants.dart';
 import 'package:simplibuy/core/reusable_widgets/reusable_widgets.dart';
 import 'package:simplibuy/core/constant.dart';
-import '../login/login_page.dart';
+
+import '../../../../core/state/state.dart';
 
 class SignUpForm extends StatelessWidget {
-  const SignUpForm({
+  SignupScreenController controller = Get.find<SignupScreenController>();
+  SignUpForm({
     Key? key,
   }) : super(key: key);
 
@@ -15,65 +20,72 @@ class SignUpForm extends StatelessWidget {
     return Scaffold(
         body: Container(
             margin: const EdgeInsets.all(defaultPadding),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  imageFromAssetsFolder(
-                      width: 120.0,
-                      height: 50.0,
-                      path: 'assets/images/simplibuy_logo_small.png'),
-                  const Padding(
-                    padding: EdgeInsets.only(top: defaultPadding),
-                  ),
-                  signUp(),
-                  const Padding(
-                    padding: EdgeInsets.only(top: defaultPadding),
-                  ),
-                  nameField(),
-                  const Padding(
-                    padding: EdgeInsets.only(top: defaultPadding),
-                  ),
-                  emailField(),
-                  const Padding(
-                    padding: EdgeInsets.only(top: defaultPadding),
-                  ),
-                  passwordField("Password"),
-                  const Padding(
-                    padding: EdgeInsets.only(top: defaultPadding),
-                  ),
-                  passwordField("Confirm Password"),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 15.0),
-                  ),
-                  notice(),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 15.0),
-                  ),
-                  submitButton(),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 15.0),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      clickableSmallButton(
-                          onPressed: () {}, path: 'assets/images/google.png'),
-                      clickableSmallButton(
-                          onPressed: () {}, path: 'assets/images/fb.png')
-                    ],
-                  ),
-                  ordinaryAndClickableText(
-                      text: "Already have an account?",
-                      clickableText: " Sign in",
-                      onClicked: () {
-                        Get.to(LoginPage(), binding: LoginScreenBinding());
-                      })
-                ],
-              ),
-            )));
+            child: SingleChildScrollView(child: Obx(() {
+              if (controller.state is LoadingState) {
+                return defaultLoading(context);
+              }
+              if (controller.state is ErrorState) return const Text("Error");
+              return signUp();
+            }))));
   }
 
   Widget signUp() {
+    return Column(
+      children: [
+        imageFromAssetsFolder(
+            width: 120.0,
+            height: 50.0,
+            path: 'assets/images/simplibuy_logo_small.png'),
+        const Padding(
+          padding: EdgeInsets.only(top: defaultPadding),
+        ),
+        signUpText(),
+        const Padding(
+          padding: EdgeInsets.only(top: defaultPadding),
+        ),
+        nameField(),
+        const Padding(
+          padding: EdgeInsets.only(top: defaultPadding),
+        ),
+        emailField(),
+        const Padding(
+          padding: EdgeInsets.only(top: defaultPadding),
+        ),
+        passwordField(),
+        const Padding(
+          padding: EdgeInsets.only(top: defaultPadding),
+        ),
+        reenterPasswordField(),
+        const Padding(
+          padding: EdgeInsets.only(top: 15.0),
+        ),
+        notice(),
+        const Padding(
+          padding: EdgeInsets.only(top: 15.0),
+        ),
+        submitButton(),
+        const Padding(
+          padding: EdgeInsets.only(top: 15.0),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            clickableSmallButton(
+                onPressed: () {}, path: 'assets/images/google.png'),
+            clickableSmallButton(onPressed: () {}, path: 'assets/images/fb.png')
+          ],
+        ),
+        ordinaryAndClickableText(
+            text: "Already have an account?",
+            clickableText: " Sign in",
+            onClicked: () {
+              Get.toNamed(LOGIN_ROUTE);
+            })
+      ],
+    );
+  }
+
+  Widget signUpText() {
     return const Align(
         alignment: Alignment.topLeft,
         child: Text(
@@ -92,10 +104,17 @@ class SignUpForm extends StatelessWidget {
         child: Text("Email",
             style: TextStyle(color: blackColor, fontSize: smallerTextFontSize)),
       ),
-      StreamBuilder(builder: (context, snapshot) {
-        return TextFormField(
+      Obx(() {
+        return TextField(
+            onChanged: (value) {
+              controller.addEmail(value);
+            },
             keyboardType: TextInputType.emailAddress,
-            decoration: customInputDecoration(hint: 'example@email.com'));
+            decoration: customInputDecoration(
+                hint: 'example@email.com',
+                errorText: controller.emailError == ""
+                    ? null
+                    : controller.emailError));
       })
     ]);
   }
@@ -107,10 +126,16 @@ class SignUpForm extends StatelessWidget {
         child: Text("Name",
             style: TextStyle(color: blackColor, fontSize: smallerTextFontSize)),
       ),
-      StreamBuilder(builder: (context, snapshot) {
-        return TextFormField(
+      Obx(() {
+        return TextField(
+            onChanged: (value) {
+              controller.addName(value);
+            },
             keyboardType: TextInputType.name,
-            decoration: customInputDecoration(hint: 'John Doe'));
+            decoration: customInputDecoration(
+                hint: 'John Doe',
+                errorText:
+                    controller.nameError == "" ? null : controller.nameError));
       })
     ]);
   }
@@ -120,21 +145,64 @@ class SignUpForm extends StatelessWidget {
         style: TextStyle(color: blackColor, fontSize: smallerTextFontSize));
   }
 
-  Widget passwordField(String text) {
+  Widget passwordField() {
     return Column(
       children: [
-        Align(
+        const Align(
           alignment: Alignment.bottomLeft,
-          child: Text(text,
+          child: Text('Enter Password',
               style: const TextStyle(
                   color: blackColor, fontSize: smallerTextFontSize)),
         ),
-        StreamBuilder(
-          builder: (context, snapshot) {
-            return TextFormField(
-                obscureText: true,
+        Obx(
+          () {
+            return TextField(
+                onChanged: (value) {
+                  controller.addPassword(value);
+                },
+                obscureText: controller.isVisible,
                 keyboardType: TextInputType.visiblePassword,
-                decoration: customInputDecoration(hint: "khbh%klna"));
+                decoration: customInputDecoration(
+                    icon: InkWell(
+                      onTap: controller.changeVisibility,
+                      child: Icon(
+                        controller.isVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                      ),
+                    ),
+                    hint: "123345",
+                    errorText: controller.passwordError == ""
+                        ? null
+                        : controller.passwordError));
+          },
+        )
+      ],
+    );
+  }
+
+  Widget reenterPasswordField() {
+    return Column(
+      children: [
+        const Align(
+          alignment: Alignment.bottomLeft,
+          child: Text('Confirm Password',
+              style: const TextStyle(
+                  color: blackColor, fontSize: smallerTextFontSize)),
+        ),
+        Obx(
+          () {
+            return TextField(
+                obscureText: controller.isVisible,
+                onChanged: (value) {
+                  controller.addSecondPassword(value);
+                },
+                keyboardType: TextInputType.visiblePassword,
+                decoration: customInputDecoration(
+                    hint: "123345",
+                    errorText: controller.secondpasswordError == ""
+                        ? null
+                        : controller.secondpasswordError));
           },
         )
       ],
@@ -142,10 +210,7 @@ class SignUpForm extends StatelessWidget {
   }
 
   Widget submitButton() {
-    return StreamBuilder(
-      builder: (context, snapshot) {
-        return authButtons(pressed: () {}, text: "Create Account");
-      },
-    );
+    return defaultButtons(
+        pressed: controller.signupUser, text: "Create Account");
   }
 }

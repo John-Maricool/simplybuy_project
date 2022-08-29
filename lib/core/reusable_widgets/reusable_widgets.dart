@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' hide Action;
 import 'package:simplibuy/core/constant.dart';
 
-Widget authButtons(
+Widget defaultButtons(
     {required VoidCallback pressed,
     required String text,
     Size size = fullWidthButtonSize}) {
@@ -16,8 +16,24 @@ Widget authButtons(
       ));
 }
 
+Widget defaultLoading(BuildContext context) {
+  return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      child: Center(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: const [
+            CircularProgressIndicator(
+              color: blueColor,
+            ),
+            Text("Loading...")
+          ])));
+}
+
 InputDecoration customInputDecoration(
-    {String? hint, String? label, String? errorText}) {
+    {String? hint, String? label, String? errorText, Widget? icon}) {
   return InputDecoration(
       hintText: hint,
       errorText: errorText,
@@ -28,6 +44,7 @@ InputDecoration customInputDecoration(
       focusedBorder: const OutlineInputBorder(
         borderSide: BorderSide(width: 1, color: lightBlueColor),
       ),
+      suffixIcon: icon,
       errorBorder: const OutlineInputBorder(
         borderSide: BorderSide(width: 1, color: errorColor),
       ));
@@ -39,7 +56,7 @@ Widget clickableSmallButton(
     double height = 30.0,
     double width = 30.0}) {
   return Container(
-      padding: EdgeInsets.all(15.0),
+      padding: const EdgeInsets.all(15.0),
       child: InkWell(
         onTap: onPressed,
         child: Image.asset(
@@ -101,5 +118,25 @@ PreferredSizeWidget customAppBar(
         size: 17.0,
       ),
     ),
+  );
+}
+
+Widget bottmNavItemWithIcon(
+    {required IconData data,
+    required String text,
+    required VoidCallback onClick}) {
+  return Column(
+    children: [
+      Icon(data, color: blueColor, size: 17),
+      const Padding(padding: EdgeInsets.only(left: 5.0)),
+      RichText(
+          text: TextSpan(
+              text: text,
+              style: const TextStyle(
+                  color: blueColor,
+                  fontSize: smallerTextFontSize,
+                  fontWeight: FontWeight.bold),
+              recognizer: TapGestureRecognizer()..onTap = onClick))
+    ],
   );
 }

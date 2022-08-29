@@ -78,7 +78,7 @@ class EnableLocation extends StatelessWidget {
   }
 
   Widget enableButton() {
-    return authButtons(
+    return defaultButtons(
         pressed: () {}, text: "Enable", size: mediumWidthButtonSize);
   }
 }

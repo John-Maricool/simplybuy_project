@@ -17,7 +17,7 @@ class LoginRepositoryImpl implements AuthRepository<LoginDetail> {
   Future<Either<Failure, Result<String>>> sendAuthDetails(
       LoginDetail detail) async {
     return await _doTask(() {
-      return Future.delayed(1000.milliseconds);
+      return Future.delayed(3000.milliseconds);
     });
   }
 

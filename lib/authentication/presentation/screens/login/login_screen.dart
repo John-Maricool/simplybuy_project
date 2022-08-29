@@ -2,20 +2,21 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simplibuy/authentication/presentation/screens/forgot_password/forgot_password.dart';
-import 'package:simplibuy/authentication/presentation/screens/signup/signup_screen.dart';
+import 'package:simplibuy/core/constants/route_constants.dart';
 import 'package:simplibuy/core/reusable_widgets/reusable_widgets.dart';
 import 'package:simplibuy/core/constant.dart';
+import '../../../../core/state/state.dart';
 import '../../screen_model_controllers/login_screen_controller.dart';
 
+// ignore: must_be_immutable
 class LoginForm extends StatelessWidget {
-  const LoginForm({
+  LoginScreenController controller = Get.find<LoginScreenController>();
+  LoginForm({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    LoginScreenController bloc = Get.find(); // like this!
-
     return Scaffold(
         bottomNavigationBar: BottomAppBar(
           color: Colors.transparent,
@@ -25,55 +26,60 @@ class LoginForm extends StatelessWidget {
                 text: "New here?",
                 clickableText: " Sign up",
                 onClicked: () {
-                  Get.to(const SignUpForm());
+                  Get.toNamed(SIGNUP_ROUTE);
                 }),
           ),
         ),
         body: Container(
-          margin: const EdgeInsets.all(defaultPadding),
-          // child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                imageFromAssetsFolder(
-                    width: 120.0,
-                    height: 50.0,
-                    path: 'assets/images/simplibuy_logo_small.png'),
-                const Padding(
-                  padding: EdgeInsets.only(top: defaultPadding),
-                ),
-                signIn(),
-                const Padding(
-                  padding: EdgeInsets.only(top: defaultPadding),
-                ),
-                emailField(bloc),
-                const Padding(
-                  padding: EdgeInsets.only(top: defaultPadding),
-                ),
-                passwordField(bloc),
-                const Padding(
-                  padding: EdgeInsets.only(top: defaultPadding),
-                ),
-                forgotPassword(() {
-                  Get.to(const ForgotPassword());
-                }),
-                const Padding(
-                  padding: EdgeInsets.only(top: defaultPadding),
-                ),
-                submitButton(bloc),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    clickableSmallButton(
-                        onPressed: () {}, path: 'assets/images/google.png'),
-                    clickableSmallButton(
-                        onPressed: () {}, path: 'assets/images/fb.png')
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ));
+            margin: const EdgeInsets.all(defaultPadding),
+            // child: Center(
+            child: SingleChildScrollView(child: Obx(() {
+              if (controller.state is LoadingState)
+                return defaultLoading(context);
+              if (controller.state is ErrorState) return const Text("Error");
+              return login();
+            }))));
+  }
+
+  Widget login() {
+    return Column(
+      children: [
+        imageFromAssetsFolder(
+            width: 120.0,
+            height: 50.0,
+            path: 'assets/images/simplibuy_logo_small.png'),
+        const Padding(
+          padding: EdgeInsets.only(top: defaultPadding),
+        ),
+        signIn(),
+        const Padding(
+          padding: EdgeInsets.only(top: defaultPadding),
+        ),
+        emailField(),
+        const Padding(
+          padding: EdgeInsets.only(top: defaultPadding),
+        ),
+        passwordField(),
+        const Padding(
+          padding: EdgeInsets.only(top: defaultPadding),
+        ),
+        forgotPassword(() {
+          Get.to(const ForgotPassword());
+        }),
+        const Padding(
+          padding: EdgeInsets.only(top: defaultPadding),
+        ),
+        submitButton(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            clickableSmallButton(
+                onPressed: () {}, path: 'assets/images/google.png'),
+            clickableSmallButton(onPressed: () {}, path: 'assets/images/fb.png')
+          ],
+        ),
+      ],
+    );
   }
 
   Widget forgotPassword(VoidCallback onClick) {
@@ -101,27 +107,29 @@ class LoginForm extends StatelessWidget {
         ));
   }
 
-  Widget emailField(LoginScreenController bloc) {
+  Widget emailField() {
     return Column(children: [
       const Align(
         alignment: Alignment.bottomLeft,
         child: Text("Email",
             style: TextStyle(color: blackColor, fontSize: smallerTextFontSize)),
       ),
-      StreamBuilder(
-          stream: bloc.getEmailStream(),
-          builder: (context, snapshot) {
-            return TextField(
-                onChanged: bloc.changeEmail,
-                keyboardType: TextInputType.emailAddress,
-                decoration: customInputDecoration(
-                    hint: 'example@email.com',
-                    errorText: snapshot.error as String?));
-          })
+      Obx(() {
+        return TextField(
+            onChanged: (email) {
+              controller.addEmail(email);
+            },
+            keyboardType: TextInputType.emailAddress,
+            decoration: customInputDecoration(
+                hint: 'example@email.com',
+                errorText: controller.emailError == ""
+                    ? null
+                    : controller.emailError));
+      })
     ]);
   }
 
-  Widget passwordField(LoginScreenController bloc) {
+  Widget passwordField() {
     return Column(
       children: [
         const Align(
@@ -130,35 +138,34 @@ class LoginForm extends StatelessWidget {
               style:
                   TextStyle(color: blackColor, fontSize: smallerTextFontSize)),
         ),
-        StreamBuilder(
-          stream: bloc.getPasswordStream(),
-          builder: (context, snapshot) {
-            return TextField(
-                onChanged: bloc.changePassword,
-                obscureText: true,
+        Obx(
+          () {
+            return TextFormField(
+                onChanged: (pass) {
+                  controller.addPassword(pass);
+                },
+                obscureText: controller.isVisible,
                 keyboardType: TextInputType.visiblePassword,
                 decoration: customInputDecoration(
-                    hint: "1234450", errorText: snapshot.error as String?));
+                    icon: InkWell(
+                      onTap: controller.changeVisibility,
+                      child: Icon(
+                        controller.isVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                      ),
+                    ),
+                    hint: "1234450",
+                    errorText: controller.passwordError == ""
+                        ? null
+                        : controller.passwordError));
           },
         )
       ],
     );
   }
 
-  Widget submitButton(LoginScreenController bloc) {
-    return StreamBuilder(
-      stream: bloc.submitValid(),
-      builder: (context, snapshot) {
-        return authButtons(
-            pressed: () {
-              snapshot.hasData
-                  ? () {
-                      bloc.loginInUser();
-                    }
-                  : null;
-            },
-            text: "Sign in");
-      },
-    );
+  Widget submitButton() {
+    return defaultButtons(pressed: controller.loginInUser, text: "Sign in");
   }
 }

@@ -88,7 +88,7 @@ class VerifyNumber extends StatelessWidget {
   Widget continueButton() {
     return StreamBuilder(
       builder: (context, snapshot) {
-        return authButtons(pressed: () {}, text: "Continue");
+        return defaultButtons(pressed: () {}, text: "Continue");
       },
     );
   }

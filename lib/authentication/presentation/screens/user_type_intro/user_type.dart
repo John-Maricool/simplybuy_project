@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simplibuy/authentication/presentation/screens/login/login_screen.dart';
 import 'package:simplibuy/authentication/presentation/screens/signup/signup_screen.dart';
+import 'package:simplibuy/core/constants/route_constants.dart';
 import 'package:simplibuy/core/reusable_widgets/reusable_widgets.dart';
 import 'package:simplibuy/core/constant.dart';
 import 'package:get/get.dart';
@@ -61,17 +62,17 @@ class UserType extends StatelessWidget {
   }
 
   Widget retailerOption() {
-    return authButtons(
+    return defaultButtons(
         pressed: () {
-          Get.to(const SignUpForm());
+          Get.toNamed(SIGNUP_ROUTE);
         },
         text: "Retailer");
   }
 
   Widget buyerOption() {
-    return authButtons(
+    return defaultButtons(
         pressed: () {
-          Get.to(const SignUpForm());
+          Get.toNamed(SIGNUP_ROUTE);
         },
         text: "Buyer");
   }

@@ -1,39 +1,45 @@
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/state_manager.dart';
-import 'package:simplibuy/authentication/domain/entities/login_details.dart';
-import 'package:simplibuy/authentication/domain/usecases/login_usecase.dart';
+import 'package:simplibuy/authentication/domain/entities/signup_details.dart';
+import 'package:simplibuy/authentication/domain/usecases/signup_usecase.dart';
 import 'package:simplibuy/core/validators/validators_string.dart';
 import 'package:simplibuy/seller_home/presentation/seller_home_drawers.dart';
 import '../../../core/state/state.dart';
 
-class LoginScreenController extends GetxController with ValidatorMixin {
-  final LoginUsecase _usecase;
+class SignupScreenController extends GetxController with ValidatorMixin {
+  final SignupUsecase _usecase;
 
   final RxString _emailError = "".obs;
   final RxString _passwordError = "".obs;
+  final RxString _secondpasswordError = "".obs;
+  final RxString _nameError = "".obs;
   final RxBool _isVisible = true.obs;
 
   String _email = "";
   String _password = "";
+  String _secondpassword = "";
+  String _name = "";
 
   String get emailError => _emailError.value;
   String get passwordError => _passwordError.value;
+  String get nameError => _nameError.value;
+  String get secondpasswordError => _secondpasswordError.value;
   bool get isVisible => _isVisible.value;
 
   final _state = const State().obs;
   State get state => _state.value;
 
-  LoginScreenController(this._usecase);
+  SignupScreenController(this._usecase);
 
   changeVisibility() {
     _isVisible.value = !_isVisible.value;
   }
 
-  Future<void> loginInUser() async {
+  Future<void> signupUser() async {
     if (_validateEmailAndPassword()) {
       _state.value = LoadingState();
-      final result = await _usecase
-          .sendAuthDetails(LoginDetail(email: _email, password: _password));
+      final result = await _usecase.sendAuthDetails(
+          SignupDetail(email: _email, password: _password, name: _name));
       if (result.isLeft) {
         _state.value = const ErrorState(errorMessage: "Error");
       } else {
@@ -52,14 +58,33 @@ class LoginScreenController extends GetxController with ValidatorMixin {
     _passwordError.value = getPasswordErrors(data);
   }
 
+  addSecondPassword(String data) {
+    _secondpassword = data;
+    if (_password != _secondpassword) {
+      _secondpasswordError.value = "Passwords are not the same";
+    } else {
+      _secondpasswordError.value = "";
+    }
+  }
+
+  addName(String data) {
+    _name = data;
+    _nameError.value = getNameErrors(data);
+  }
+
   bool _validateEmailAndPassword() {
     String emailErrors = getEmailErrors(_email);
     String passwordErrors = getPasswordErrors(_password);
-    if (_emailError.isEmpty && passwordErrors.isEmpty) {
+    String nameErrors = getNameErrors(_name);
+    if (emailErrors.isEmpty &&
+        passwordErrors.isEmpty &&
+        nameErrors.isEmpty &&
+        _password == _secondpassword) {
       return true;
     } else {
       _emailError.value = emailErrors;
       _passwordError.value = passwordErrors;
+      _nameError.value = nameErrors;
       return false;
     }
   }

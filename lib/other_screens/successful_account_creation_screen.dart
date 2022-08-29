@@ -43,7 +43,7 @@ class AccountSuccess extends StatelessWidget {
   }
 
   Widget startBuyingOrSelling() {
-    return authButtons(
+    return defaultButtons(
         pressed: () {}, text: "Start Buying", size: const Size(150.0, 50.0));
   }
 }

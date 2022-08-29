@@ -1,21 +1,30 @@
-import 'dart:async';
-
 mixin ValidatorMixin {
-  final validateEmail =
-      StreamTransformer<String, String>.fromHandlers(handleData: (email, sink) {
-    if (email.contains('@')) {
-      sink.add(email);
+  String getEmailErrors(String email) {
+    if (!email.contains('@')) {
+      return "Invalid Email format missing @";
+    } else if (email.length < 5 || email.isEmpty) {
+      return "This is not an email";
     } else {
-      sink.addError('Enter a valid Email');
+      return "";
     }
-  });
+  }
 
-  final validatePassword = StreamTransformer<String, String>.fromHandlers(
-      handleData: (password, sink) {
-    if (password.length >= 6) {
-      sink.add(password);
+  String getPasswordErrors(String password) {
+    if (password.length < 6) {
+      return "Password length is too short";
     } else {
-      sink.addError('Enter a longer password');
+      return "";
     }
-  });
+  }
+
+  String getNameErrors(String name) {
+    if (name.length < 4) {
+      return "length is too short";
+    }
+    if (name.isEmpty) {
+      return "This field cannot be empty";
+    } else {
+      return "";
+    }
+  }
 }
