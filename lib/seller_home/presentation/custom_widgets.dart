@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simplibuy/core/constant.dart';
+import 'package:simplibuy/seller_home/domain/entities/strore_details.dart';
 
 Widget customButtonWithIcon(
     {required String text,
@@ -68,17 +69,22 @@ Widget searchInput(BuildContext context) {
       ));
 }
 
-Widget storesListSingleItem(
-    {required String imgUrl,
-    required String shopName,
-    required String shopLocation}) {
+Widget storesListSingleItem({required StoreDetails details}) {
   return Card(
     shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(8))),
     elevation: 5,
     color: Colors.white,
     child: Column(
-      children: [Image.asset("name"), Text(shopName), Text(shopLocation)],
+      children: [
+        Image.asset(
+          "assets/images/shoprite.png",
+          width: 60,
+          height: 100,
+        ),
+        Text(details.name),
+        Text(details.location)
+      ],
     ),
   );
 }

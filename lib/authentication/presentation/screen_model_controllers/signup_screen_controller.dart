@@ -1,5 +1,4 @@
-import 'package:get/get_navigation/get_navigation.dart';
-import 'package:get/state_manager.dart';
+import 'package:get/get.dart';
 import 'package:simplibuy/authentication/domain/entities/signup_details.dart';
 import 'package:simplibuy/authentication/domain/usecases/signup_usecase.dart';
 import 'package:simplibuy/core/validators/validators_string.dart';

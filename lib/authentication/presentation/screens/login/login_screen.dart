@@ -34,8 +34,9 @@ class LoginForm extends StatelessWidget {
             margin: const EdgeInsets.all(defaultPadding),
             // child: Center(
             child: SingleChildScrollView(child: Obx(() {
-              if (controller.state is LoadingState)
+              if (controller.state is LoadingState) {
                 return defaultLoading(context);
+              }
               if (controller.state is ErrorState) return const Text("Error");
               return login();
             }))));

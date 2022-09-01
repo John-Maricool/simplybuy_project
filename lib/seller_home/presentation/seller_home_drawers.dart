@@ -12,7 +12,7 @@ class SellerHome extends StatelessWidget {
       appBar: _homeAppBar(text: "Good morning", onPressed: () {}),
       bottomNavigationBar: bottomNavDrawer(),
       drawer: navDrawer(),
-      body: const SellerScreen(),
+      body: SellerScreen(),
     );
   }
 

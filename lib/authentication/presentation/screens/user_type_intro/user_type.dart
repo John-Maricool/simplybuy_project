@@ -64,7 +64,7 @@ class UserType extends StatelessWidget {
   Widget retailerOption() {
     return defaultButtons(
         pressed: () {
-          Get.toNamed(SIGNUP_ROUTE);
+          Get.toNamed(LOGIN_ROUTE);
         },
         text: "Retailer");
   }
