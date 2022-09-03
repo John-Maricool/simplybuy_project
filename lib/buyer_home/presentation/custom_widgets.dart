@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simplibuy/core/constant.dart';
-import 'package:simplibuy/seller_home/domain/entities/strore_details.dart';
+import 'package:simplibuy/buyer_home/domain/entities/strore_details.dart';
 
 Widget customButtonWithIcon(
     {required String text,
@@ -11,7 +11,7 @@ Widget customButtonWithIcon(
       alignment: Alignment.center,
       decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(35))),
-      padding: EdgeInsets.all(2),
+      padding: const EdgeInsets.all(2),
       child: ElevatedButton.icon(
         onPressed: onPressed,
         icon: Icon(
@@ -69,22 +69,27 @@ Widget searchInput(BuildContext context) {
       ));
 }
 
-Widget storesListSingleItem({required StoreDetails details}) {
+Widget storesGridSingleItem({required StoreDetails details}) {
   return Card(
-    shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(8))),
-    elevation: 5,
-    color: Colors.white,
-    child: Column(
-      children: [
-        Image.asset(
-          "assets/images/shoprite.png",
-          width: 60,
-          height: 100,
-        ),
-        Text(details.name),
-        Text(details.location)
-      ],
-    ),
-  );
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8))),
+      elevation: 5,
+      color: Colors.white,
+      child: SingleChildScrollView(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset("assets/images/shoprirte.png", width: 130),
+          Text(
+            details.name,
+            style:
+                const TextStyle(fontSize: smallTextFontSize, color: blackColor),
+          ),
+          Text(
+            details.location,
+            style: const TextStyle(fontSize: 15, color: blackColor),
+          ),
+          const Padding(padding: EdgeInsets.only(top: 5))
+        ],
+      )));
 }

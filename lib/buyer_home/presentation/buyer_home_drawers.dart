@@ -1,10 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:simplibuy/buyer_home/presentation/buyer_screen.dart';
 import 'package:simplibuy/core/constant.dart';
-import 'package:simplibuy/seller_home/presentation/seller_screen.dart';
 
-class SellerHome extends StatelessWidget {
-  const SellerHome({Key? key}) : super(key: key);
+class BuyerHome extends StatelessWidget {
+  const BuyerHome({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class SellerHome extends StatelessWidget {
       appBar: _homeAppBar(text: "Good morning", onPressed: () {}),
       bottomNavigationBar: bottomNavDrawer(),
       drawer: navDrawer(),
-      body: SellerScreen(),
+      body: BuyerScreen(),
     );
   }
 

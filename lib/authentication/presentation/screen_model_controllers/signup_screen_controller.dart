@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
 import 'package:simplibuy/authentication/domain/entities/signup_details.dart';
 import 'package:simplibuy/authentication/domain/usecases/signup_usecase.dart';
+import 'package:simplibuy/core/constants/route_constants.dart';
 import 'package:simplibuy/core/validators/validators_string.dart';
-import 'package:simplibuy/seller_home/presentation/seller_home_drawers.dart';
+import 'package:simplibuy/buyer_home/presentation/buyer_home_drawers.dart';
 import '../../../core/state/state.dart';
 
 class SignupScreenController extends GetxController with ValidatorMixin {
@@ -42,7 +43,7 @@ class SignupScreenController extends GetxController with ValidatorMixin {
       if (result.isLeft) {
         _state.value = const ErrorState(errorMessage: "Error");
       } else {
-        Get.offAll(const SellerHome());
+        Get.offAllNamed(BUYER_HOME_PAGE_ROUTE);
       }
     }
   }
