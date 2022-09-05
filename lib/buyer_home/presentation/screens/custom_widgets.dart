@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:simplibuy/core/constant.dart';
 import 'package:simplibuy/buyer_home/domain/entities/strore_details.dart';
 
 Widget customButtonWithIcon(
     {required String text,
     required IconData iconData,
-    required VoidCallback onPressed}) {
+    required VoidCallback onPressed,
+    BorderSide? side}) {
   return Container(
       height: 60,
       alignment: Alignment.center,
@@ -23,8 +25,10 @@ Widget customButtonWithIcon(
           style:
               const TextStyle(color: blackColor, fontSize: smallTextFontSize),
         ), //label text
-        style: ElevatedButton.styleFrom(
+        style: OutlinedButton.styleFrom(
+          backgroundColor: Colors.white,
           primary: Colors.white,
+          side: side,
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(18))),
           elevation: 3,
@@ -45,7 +49,7 @@ Widget filterOption(VoidCallback onPressed) {
           icon: const Icon(Icons.filter_list)));
 }
 
-Widget searchInput(BuildContext context) {
+Widget searchInputBlue(BuildContext context) {
   return SizedBox(
       width: MediaQuery.of(context).size.width * 0.75,
       child: TextField(
@@ -65,8 +69,74 @@ Widget searchInput(BuildContext context) {
           hintText: "Where do you want to shop?",
           hintStyle: TextStyle(color: Colors.grey[800]),
         ),
-        textAlign: TextAlign.center,
+        textAlign: TextAlign.left,
       ));
+}
+
+Widget searchInputGrey(BuildContext context) {
+  return SizedBox(
+      child: TextField(
+    decoration: InputDecoration(
+      filled: true,
+      border: const OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+        borderSide:
+            BorderSide(width: 0, color: Color.fromRGBO(236, 240, 243, 1)),
+      ),
+      fillColor: const Color.fromRGBO(236, 240, 243, 1),
+      prefixIcon: const Icon(
+        Icons.search,
+        color: blackColor,
+      ),
+      hintText: "Search for a store",
+      hintStyle: TextStyle(color: Colors.grey[800]),
+    ),
+    textAlign: TextAlign.left,
+  ));
+}
+
+Widget storesListSingleItem({required StoreDetails details}) {
+  return Card(
+    margin: const EdgeInsets.all(5),
+    shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(8))),
+    elevation: 5,
+    color: Colors.white,
+    child: Row(
+      children: [
+        Image.asset("assets/images/shoprite_small.png"),
+        Flexible(
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Align(
+            alignment: Alignment.bottomRight,
+            child: RatingBar.builder(
+                initialRating: 3,
+                itemSize: 11,
+                minRating: 1,
+                onRatingUpdate: (rating) {},
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                itemBuilder: (context, _) =>
+                    const Icon(Icons.star, color: Colors.amber)),
+          ),
+          Text(details.name,
+              maxLines: 1,
+              style: const TextStyle(
+                  color: blackColor, fontSize: smallTextFontSize)),
+          Text(details.location,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(color: blackColor, fontSize: 15)),
+          Text(details.address,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(color: blackColor, fontSize: 15))
+        ]))
+      ],
+    ),
+  );
 }
 
 Widget storesGridSingleItem({required StoreDetails details}) {

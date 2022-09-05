@@ -1,5 +1,5 @@
 class Result<T> {
-  final obj = T;
+  T value;
 
-  Result({required T value});
+  Result({required this.value});
 }

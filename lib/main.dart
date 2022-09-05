@@ -4,12 +4,13 @@ import 'package:simplibuy/authentication/presentation/screen_bindings/signup_scr
 import 'package:simplibuy/authentication/presentation/screens/login/login_screen.dart';
 import 'package:simplibuy/authentication/presentation/screens/signup/signup_screen.dart';
 import 'package:simplibuy/authentication/presentation/screens/user_type_intro/user_type.dart';
-import 'package:simplibuy/buyer_home/presentation/stores_and_malls_screen.dart';
+import 'package:simplibuy/buyer_home/presentation/bindings/stores_and_malls_binding.dart';
+import 'package:simplibuy/buyer_home/presentation/screens/stores_and_malls_screen.dart';
 import 'package:simplibuy/core/constant.dart';
 import 'package:simplibuy/core/constants/route_constants.dart';
 import 'package:simplibuy/main_binding.dart';
 import 'package:get/get.dart';
-import 'package:simplibuy/buyer_home/presentation/buyer_home_drawers.dart';
+import 'package:simplibuy/buyer_home/presentation/screens/buyer_home_drawers.dart';
 
 void main() {
   runApp(MyApp());
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
       initialBinding: MainBinding(),
       theme: ThemeData(
           primarySwatch: Colors.blue, scaffoldBackgroundColor: whiteColor),
-      home: const BuyerHome(),
+      home: const UserType(),
     );
   }
 
@@ -42,11 +43,13 @@ class MyApp extends StatelessWidget {
         binding: SignupScreenBinding()),
     GetPage(
       name: BUYER_HOME_PAGE_ROUTE,
+      binding: StoresAndMallsBinding(),
       page: () => const BuyerHome(),
     ),
     GetPage(
       name: STORES_LIST_ROUTE,
-      page: () => const StoresAndMallsScreen(),
+      binding: StoresAndMallsBinding(),
+      page: () => StoresAndMallsScreen(),
     ),
   ];
 }

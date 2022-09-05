@@ -1,19 +1,19 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:simplibuy/buyer_home/presentation/buyer_screen.dart';
+import 'package:simplibuy/buyer_home/presentation/screens/buyer_screen.dart';
 import 'package:simplibuy/core/constant.dart';
 
+// ignore: must_be_immutable
 class BuyerHome extends StatelessWidget {
   const BuyerHome({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _homeAppBar(text: "Good morning", onPressed: () {}),
-      bottomNavigationBar: bottomNavDrawer(),
-      drawer: navDrawer(),
-      body: BuyerScreen(),
-    );
+        appBar: _homeAppBar(text: "Good morning", onPressed: () {}),
+        bottomNavigationBar: bottomNavDrawer(),
+        drawer: navDrawer(),
+        body: BuyerScreen());
   }
 
   Widget bottomNavDrawer() {

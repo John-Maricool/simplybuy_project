@@ -3,7 +3,6 @@ import 'package:simplibuy/authentication/domain/entities/signup_details.dart';
 import 'package:simplibuy/authentication/domain/usecases/signup_usecase.dart';
 import 'package:simplibuy/core/constants/route_constants.dart';
 import 'package:simplibuy/core/validators/validators_string.dart';
-import 'package:simplibuy/buyer_home/presentation/buyer_home_drawers.dart';
 import '../../../core/state/state.dart';
 
 class SignupScreenController extends GetxController with ValidatorMixin {
