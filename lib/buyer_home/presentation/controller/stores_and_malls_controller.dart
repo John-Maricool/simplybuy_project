@@ -4,6 +4,12 @@ import 'package:simplibuy/buyer_home/domain/usecases/stores_and_malls_usecase.da
 import '../../../core/state/state.dart';
 
 class StoresAndMallsController extends GetxController {
+  @override
+  void onInit() {
+    super.onInit();
+    getStores();
+  }
+
   final StoresAndMallsUsecase usecase;
 
   StoresAndMallsController({required this.usecase});

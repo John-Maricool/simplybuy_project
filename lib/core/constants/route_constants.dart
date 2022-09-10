@@ -3,3 +3,4 @@ const LOGIN_ROUTE = '/login';
 const SIGNUP_ROUTE = '/signup';
 const BUYER_HOME_PAGE_ROUTE = '/buyer_home';
 const STORES_LIST_ROUTE = '/stores_list';
+const CART_LIST_SCREEN = '/cart_list';

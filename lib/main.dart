@@ -6,6 +6,7 @@ import 'package:simplibuy/authentication/presentation/screens/signup/signup_scre
 import 'package:simplibuy/authentication/presentation/screens/user_type_intro/user_type.dart';
 import 'package:simplibuy/buyer_home/presentation/bindings/stores_and_malls_binding.dart';
 import 'package:simplibuy/buyer_home/presentation/screens/stores_and_malls_screen.dart';
+import 'package:simplibuy/cart/presentation/screens/cart_list_screen.dart';
 import 'package:simplibuy/core/constant.dart';
 import 'package:simplibuy/core/constants/route_constants.dart';
 import 'package:simplibuy/main_binding.dart';
@@ -44,12 +45,16 @@ class MyApp extends StatelessWidget {
     GetPage(
       name: BUYER_HOME_PAGE_ROUTE,
       binding: StoresAndMallsBinding(),
-      page: () => const BuyerHome(),
+      page: () => BuyerHome(),
     ),
     GetPage(
       name: STORES_LIST_ROUTE,
       binding: StoresAndMallsBinding(),
       page: () => StoresAndMallsScreen(),
+    ),
+    GetPage(
+      name: CART_LIST_SCREEN,
+      page: () => CartList(),
     ),
   ];
 }

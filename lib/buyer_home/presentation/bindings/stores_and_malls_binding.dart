@@ -5,6 +5,7 @@ import 'package:simplibuy/buyer_home/presentation/controller/stores_and_malls_co
 import 'package:simplibuy/core/network/network_info.dart';
 
 import '../../data/repositories/stores_and_malls_repository_impl.dart';
+import '../controller/buyer_home_navigation_controller.dart';
 
 class StoresAndMallsBinding implements Bindings {
   @override
@@ -16,5 +17,7 @@ class StoresAndMallsBinding implements Bindings {
         Get.put(StoresAndMallsUsecase(repository: repository));
     Get.put<StoresAndMallsController>(
         StoresAndMallsController(usecase: usecase));
+    Get.lazyPut<BuyerHomeNavigationController>(
+        () => BuyerHomeNavigationController());
   }
 }

@@ -3,6 +3,34 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:simplibuy/core/constant.dart';
 import 'package:simplibuy/buyer_home/domain/entities/strore_details.dart';
 
+PreferredSizeWidget homeAppBar(
+    {required String text, required VoidCallback onPressed}) {
+  return AppBar(
+      elevation: 2,
+      iconTheme: const IconThemeData(color: blackColor),
+      title: Text(
+        text,
+        style: const TextStyle(color: blackColor, fontSize: smallTextFontSize),
+      ),
+      backgroundColor: whiteColor,
+      actions: [
+        Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+                onTap: onPressed,
+                child: Ink(
+                    decoration: const ShapeDecoration(shadows: [
+                      BoxShadow(color: Color.fromARGB(255, 129, 127, 127))
+                    ], color: Colors.white, shape: CircleBorder()),
+                    child: IconButton(
+                        color: blackColor,
+                        highlightColor: whiteColor,
+                        focusColor: whiteColor,
+                        onPressed: onPressed,
+                        icon: const Icon(Icons.notifications)))))
+      ]);
+}
+
 Widget customButtonWithIcon(
     {required String text,
     required IconData iconData,
