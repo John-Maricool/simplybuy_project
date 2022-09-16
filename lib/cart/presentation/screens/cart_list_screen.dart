@@ -14,11 +14,11 @@ class CartList extends StatelessWidget {
   CartList({Key? key}) : super(key: key);
 
   CartListController controller = Get.find<CartListController>();
-  // CartDao dao = Get.find<CartDao>();
+  CartDao dao = Get.find<CartDao>();
 
   @override
   Widget build(BuildContext context) {
-    //addToCart();
+    // addToCart();
     return Scaffold(
         appBar: AppBar(
           elevation: 3,
@@ -35,22 +35,23 @@ class CartList extends StatelessWidget {
                 return defaultLoading(context);
               }
               if (controller.state == ErrorState(errorType: EmptyListError())) {
-                return noDataInCart(controller.startShopping());
+                return noDataInCart(() => controller.startShopping());
+              } else {
+                return ListView(children: [
+                  cartList(context),
+                  const Padding(padding: EdgeInsets.only(top: 10)),
+                  calculations(context),
+                  const Padding(padding: EdgeInsets.only(top: 10)),
+                  defaultButtons(pressed: () {}, text: 'Reserve Item'),
+                  const Padding(padding: EdgeInsets.only(top: 10)),
+                  defaultButtons(pressed: () {}, text: 'I want this delivered')
+                ]);
               }
-              return ListView(children: [
-                cartList(context),
-                const Padding(padding: EdgeInsets.only(top: 10)),
-                calculations(context),
-                const Padding(padding: EdgeInsets.only(top: 10)),
-                defaultButtons(pressed: () {}, text: 'Reserve Item'),
-                const Padding(padding: EdgeInsets.only(top: 10)),
-                defaultButtons(pressed: () {}, text: 'I want this delivered')
-              ]);
             })));
   }
 
   Widget cartList(BuildContext context) {
-    return SizedBox(
+    return Obx(() => SizedBox(
         height: MediaQuery.of(context).size.height * 0.56,
         width: MediaQuery.of(context).size.width,
         child: ListView.builder(
@@ -63,11 +64,11 @@ class CartList extends StatelessWidget {
               }, () {
                 controller.updateNumberOfItemsLower(position);
               });
-            }));
+            })));
   }
 
   Widget calculations(BuildContext context) {
-    return SizedBox(
+    return Obx(() => SizedBox(
         height: 120,
         child: Card(
             margin: const EdgeInsets.all(8),
@@ -92,7 +93,7 @@ class CartList extends StatelessWidget {
                     calculationInfo('Total', '₦${controller.totalPrice}',
                         weight: FontWeight.bold)
                   ],
-                ))));
+                )))));
   }
 
   Widget singleCartItem(ItemCartDetails details, VoidCallback ondelete,
@@ -175,6 +176,6 @@ class CartList extends StatelessWidget {
           itemPieces: 2,
           itemPrice: 2333),
     ];
-    //  items.forEach((item) => dao.addToCart(item));
+    items.forEach((item) => dao.addToCart(item));
   }
 }

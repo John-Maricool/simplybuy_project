@@ -95,6 +95,7 @@ Widget noDataInCart(VoidCallback startShoppingClicked) {
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       Image.asset('assets/images/no_cart_items.png'),
+      const Padding(padding: EdgeInsets.only(top: 10)),
       const Text(
         'Your Cart is Empty',
         style: TextStyle(
@@ -102,6 +103,7 @@ Widget noDataInCart(VoidCallback startShoppingClicked) {
             fontSize: smallTextFontSize,
             fontWeight: FontWeight.bold),
       ),
+      const Padding(padding: EdgeInsets.only(top: 10)),
       const Text(
         'Looks like you have not added anything to your cart.',
         style: TextStyle(color: blackColor, fontSize: 15),

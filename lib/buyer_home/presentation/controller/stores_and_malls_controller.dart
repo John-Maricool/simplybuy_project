@@ -33,6 +33,14 @@ class StoresAndMallsController extends GetxController {
     _isStore.value = false;
   }
 
+  void reload() {
+    if (_isStore.isTrue) {
+      getStores();
+    } else {
+      getMalls();
+    }
+  }
+
   Future<void> getStores() async {
     _toggleIsStore();
     _state.value = LoadingState();

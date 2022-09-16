@@ -1,27 +1,42 @@
-abstract class ErrorType {
-  String? errMessage;
+import 'package:equatable/equatable.dart';
 
-  ErrorType({this.errMessage});
+abstract class ErrorType extends Equatable {
+  String errMessage = "Error";
+
+  ErrorType();
+  @override
+  List<Object> get props => [this];
 }
 
-class InternetError implements ErrorType {
+// ignore: must_be_immutable
+class InternetError extends ErrorType implements Equatable {
   @override
-  String? errMessage = "No Internet";
+  List<Object> get props => [errMessage];
+
+  @override
+  bool? get stringify => true;
 }
 
-class EmptyListError implements ErrorType {
+class EmptyListError extends ErrorType implements Equatable {
   @override
-  String? errMessage = "The list is Empty";
+  List<Object> get props => [errMessage];
+
+  @override
+  bool? get stringify => true;
 }
 
-class ServerError implements ErrorType {
+class ServerError extends ErrorType implements Equatable {
   @override
-  String? errMessage = "Server failure";
-  ServerError({this.errMessage});
+  List<Object> get props => [this];
+
+  @override
+  bool? get stringify => true;
 }
 
-class DefaultError implements ErrorType {
+class DefaultError extends ErrorType implements Equatable {
   @override
-  String? errMessage = "Server failure";
-  DefaultError({this.errMessage});
+  List<Object> get props => [this];
+
+  @override
+  bool? get stringify => true;
 }

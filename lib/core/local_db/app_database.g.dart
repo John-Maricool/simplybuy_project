@@ -121,12 +121,6 @@ class _$CartDao extends CartDao {
   final InsertionAdapter<ItemCartDetails> _itemCartDetailsInsertionAdapter;
 
   @override
-  Future<double?> totalResults() async {
-    await _queryAdapter
-        .queryNoReturn('SELECT  SUM(totalPrice) FROM ItemCartDetails');
-  }
-
-  @override
   Stream<List<ItemCartDetails>> getAllCartItems() {
     return _queryAdapter.queryListStream('SELECT * FROM ItemCartDetails',
         mapper: (Map<String, Object?> row) => ItemCartDetails(

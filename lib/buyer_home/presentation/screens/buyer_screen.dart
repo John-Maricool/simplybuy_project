@@ -5,6 +5,7 @@ import 'package:simplibuy/buyer_home/presentation/controller/stores_and_malls_co
 import 'package:simplibuy/core/constant.dart';
 import 'package:simplibuy/buyer_home/presentation/screens/custom_widgets.dart';
 import 'package:simplibuy/core/constants/route_constants.dart';
+import 'package:simplibuy/core/error_types/error_types.dart';
 
 import '../../../core/reusable_widgets/reusable_widgets.dart';
 import '../../../core/state/state.dart';
@@ -54,15 +55,23 @@ class BuyerHomeScreen extends StatelessWidget {
               ),
               Align(
                   alignment: Alignment.topRight,
-                  child: RichText(
-                      text: TextSpan(
-                          text: "View all",
-                          style: const TextStyle(
-                              color: blackColor, fontSize: smallerTextFontSize),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Get.toNamed(STORES_LIST_ROUTE);
-                            }))),
+                  child: Obx(() {
+                    return RichText(
+                        text: TextSpan(
+                            text: controller.state is ErrorState
+                                ? ""
+                                : "View all",
+                            style: const TextStyle(
+                                color: blackColor,
+                                fontSize: smallerTextFontSize),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                controller.state is ErrorState
+                                    ? VoidCallback
+                                    : Get.toNamed(STORES_LIST_ROUTE);
+                                Get.toNamed(STORES_LIST_ROUTE);
+                              }));
+                  })),
               Expanded(
                 child: _itemsList(context),
               )
@@ -177,8 +186,10 @@ class BuyerHomeScreen extends StatelessWidget {
       if (controller.state is LoadingState) {
         return defaultLoading(context);
       }
-      if (controller.state is ErrorState) {
-        return const Text("Error");
+      if (controller.state == ErrorState(errorType: InternetError())) {
+        return noInternet(() {
+          controller.reload();
+        });
       }
       return GridView.count(
           crossAxisCount: 2,

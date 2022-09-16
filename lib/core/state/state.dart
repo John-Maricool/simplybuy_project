@@ -6,18 +6,33 @@ class State<T> extends Equatable {
   const State();
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [this];
 }
 
-class LoadingState extends State {}
+class LoadingState extends State implements Equatable {
+  @override
+  List<Object> get props => [this];
 
-class FinishedState extends State {}
+  @override
+  bool? get stringify => true;
+}
 
-class ErrorState extends State {
+class FinishedState extends State implements Equatable {
+  @override
+  List<Object> get props => [this];
+
+  @override
+  bool? get stringify => true;
+}
+
+class ErrorState extends State implements Equatable {
   final ErrorType errorType;
 
   const ErrorState({required this.errorType});
 
   @override
   List<Object> get props => [errorType];
+
+  @override
+  bool? get stringify => true;
 }

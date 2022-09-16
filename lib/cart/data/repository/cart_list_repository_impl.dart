@@ -15,8 +15,10 @@ class CartListRepositoryImpl implements CartListRepository {
       getItemsInCart() async {
     var result = await dao.getAllCartItems().first;
     if (result.isEmpty) {
+      print('The data is empty');
       return Left(Failure(error: EmptyListError()));
     } else {
+      print('The data is not empty');
       return Right(Result(value: result));
     }
   }

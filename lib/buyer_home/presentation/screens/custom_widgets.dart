@@ -3,6 +3,8 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:simplibuy/core/constant.dart';
 import 'package:simplibuy/buyer_home/domain/entities/strore_details.dart';
 
+import '../../../core/reusable_widgets/reusable_widgets.dart';
+
 PreferredSizeWidget homeAppBar(
     {required String text, required VoidCallback onPressed}) {
   return AppBar(
@@ -190,4 +192,31 @@ Widget storesGridSingleItem({required StoreDetails details}) {
           const Padding(padding: EdgeInsets.only(top: 5))
         ],
       )));
+}
+
+Widget noInternet(VoidCallback startShoppingClicked) {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Image.asset('assets/images/no_network.png'),
+      const Padding(padding: EdgeInsets.only(top: 10)),
+      const Text(
+        'Oops!',
+        style: TextStyle(
+            color: blackColor,
+            fontSize: smallTextFontSize,
+            fontWeight: FontWeight.bold),
+      ),
+      const Padding(padding: EdgeInsets.only(top: 10)),
+      const Text(
+        'Please check your Internet connection and try again',
+        style: TextStyle(color: blackColor, fontSize: 15),
+      ),
+      const Padding(padding: EdgeInsets.only(top: 30)),
+      defaultButtons(
+          pressed: startShoppingClicked,
+          text: 'Try Again',
+          size: const Size(120, 50))
+    ],
+  );
 }
