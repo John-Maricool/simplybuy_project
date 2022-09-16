@@ -38,7 +38,7 @@ class StoresAndMallsController extends GetxController {
     _state.value = LoadingState();
     final result = await usecase.getStores();
     if (result.isLeft) {
-      _state.value = const ErrorState(errorMessage: "Error");
+      _state.value = ErrorState(errorType: result.left.error);
     } else {
       _details.value = result.right.value;
       _state.value = FinishedState();
@@ -50,7 +50,7 @@ class StoresAndMallsController extends GetxController {
     _state.value = LoadingState();
     final result = await usecase.getMalls();
     if (result.isLeft) {
-      _state.value = const ErrorState(errorMessage: "Error");
+      _state.value = ErrorState(errorType: result.left.error);
     } else {
       _details.value = result.right.value;
       _state.value = FinishedState();

@@ -34,7 +34,7 @@ class LoginScreenController extends GetxController with ValidatorMixin {
       final result = await _usecase
           .sendAuthDetails(LoginDetail(email: _email, password: _password));
       if (result.isLeft) {
-        _state.value = const ErrorState(errorMessage: "Error");
+        _state.value = ErrorState(errorType: result.left.error);
       } else {
         Get.offAllNamed(BUYER_HOME_PAGE_ROUTE);
       }

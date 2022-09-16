@@ -5,11 +5,10 @@ import 'package:get/get.dart';
 import 'package:simplibuy/buyer_home/presentation/screens/buyer_screen.dart';
 import 'package:simplibuy/cart/presentation/screens/cart_list_screen.dart';
 import 'package:simplibuy/core/constant.dart';
-
 import '../controller/buyer_home_navigation_controller.dart';
 
-class BuyerHome extends StatelessWidget {
-  BuyerHome({Key? key}) : super(key: key);
+class BuyerBottomNavScreen extends StatelessWidget {
+  BuyerBottomNavScreen({Key? key}) : super(key: key);
 
   BuyerHomeNavigationController controller =
       Get.find<BuyerHomeNavigationController>();
@@ -19,8 +18,8 @@ class BuyerHome extends StatelessWidget {
     return Scaffold(
         bottomNavigationBar: bottomNavDrawer(),
         body: Obx(() {
-          if (controller.currentPage == 0) return BuyerScreen();
-          return const CartList();
+          if (controller.currentPage == 0) return BuyerHomeScreen();
+          return CartList();
         }));
   }
 

@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import '../error_types/error_types.dart';
+
 class State<T> extends Equatable {
   const State();
 
@@ -12,10 +14,10 @@ class LoadingState extends State {}
 class FinishedState extends State {}
 
 class ErrorState extends State {
-  final String errorMessage;
+  final ErrorType errorType;
 
-  const ErrorState({required this.errorMessage});
+  const ErrorState({required this.errorType});
 
   @override
-  List<Object> get props => [errorMessage];
+  List<Object> get props => [errorType];
 }

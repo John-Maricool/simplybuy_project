@@ -2,6 +2,7 @@ import 'package:either_dart/either.dart';
 import 'package:get/get.dart';
 import 'package:simplibuy/authentication/domain/entities/signup_details.dart';
 import 'package:simplibuy/authentication/domain/repositories/auth_repository.dart';
+import 'package:simplibuy/core/error_types/error_types.dart';
 import 'package:simplibuy/core/failure/failure.dart';
 import 'package:simplibuy/core/result/result.dart';
 import '../../../core/network/network_info.dart';
@@ -43,9 +44,9 @@ class SignupRepositoryImpl implements AuthRepository<SignupDetail> {
         res;
         return Right(Result(value: ""));
       } on Exception {
-        return const Left(Failure());
+        return Left(Failure(error: ServerError()));
       }
     }
-    return const Left(Failure());
+    return Left(Failure(error: InternetError()));
   }
 }

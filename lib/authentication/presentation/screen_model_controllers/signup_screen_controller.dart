@@ -40,7 +40,7 @@ class SignupScreenController extends GetxController with ValidatorMixin {
       final result = await _usecase.sendAuthDetails(
           SignupDetail(email: _email, password: _password, name: _name));
       if (result.isLeft) {
-        _state.value = const ErrorState(errorMessage: "Error");
+        _state.value = ErrorState(errorType: result.left.error);
       } else {
         Get.offAllNamed(BUYER_HOME_PAGE_ROUTE);
       }

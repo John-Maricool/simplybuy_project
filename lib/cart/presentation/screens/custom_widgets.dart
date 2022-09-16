@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:simplibuy/cart/domain/entities/item_cart_detail.dart';
 import 'package:simplibuy/core/constant.dart';
-
-import '../../../buyer_home/domain/entities/strore_details.dart';
+import 'package:simplibuy/core/reusable_widgets/reusable_widgets.dart';
 
 Widget itemCounterIcon(IconData icon, VoidCallback onPressed) {
   return IconButton(
@@ -20,16 +20,15 @@ Widget itemCounterIcon(IconData icon, VoidCallback onPressed) {
 }
 
 Widget itemCounter(
-    {int number = 2,
+    {required int number,
     required VoidCallback onAdded,
     required VoidCallback onSubtracted}) {
-  return Flexible(
-      child: Row(children: [
+  return Row(children: [
     itemCounterIcon(Icons.add_outlined, onAdded),
     Text(number.toString(),
-        style: TextStyle(color: blackColor, fontSize: smallTextFontSize)),
+        style: const TextStyle(color: blackColor, fontSize: smallTextFontSize)),
     itemCounterIcon(Icons.remove, onSubtracted)
-  ]));
+  ]);
 }
 
 Widget deleteTextButton(VoidCallback onDelete) {
@@ -44,19 +43,17 @@ Widget deleteTextButton(VoidCallback onDelete) {
           style: TextStyle(color: blackColor, fontSize: smallTextFontSize)));
 }
 
-Widget cartListSingleItem(StoreDetails? details) {
+Widget cartListSingleItem(ItemCartDetails details) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: [
       Image.asset("assets/images/cart_test.png"),
-      Flexible(
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text('Mami\'s kitchen',
+      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(details.storeName,
             maxLines: 1,
             style: const TextStyle(color: blackColor, fontSize: 15)),
         const Padding(padding: EdgeInsets.only(top: 5)),
-        Text('Fried Rice with Chicken',
+        Text(details.itemName,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
@@ -64,12 +61,12 @@ Widget cartListSingleItem(StoreDetails? details) {
                 color: blackColor,
                 fontSize: smallTextFontSize)),
         const Padding(padding: EdgeInsets.only(top: 5)),
-        Text('N3,000',
+        Text(details.itemPrice.toString(),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style:
                 const TextStyle(color: blackColor, fontSize: smallTextFontSize))
-      ]))
+      ])
     ],
   );
 }
@@ -89,6 +86,28 @@ Widget calculationInfo(String title, String amount,
         style: TextStyle(
             color: blackColor, fontSize: smallTextFontSize, fontWeight: weight),
       )
+    ],
+  );
+}
+
+Widget noDataInCart(VoidCallback startShoppingClicked) {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Image.asset('assets/images/no_cart_items.png'),
+      const Text(
+        'Your Cart is Empty',
+        style: TextStyle(
+            color: blackColor,
+            fontSize: smallTextFontSize,
+            fontWeight: FontWeight.bold),
+      ),
+      const Text(
+        'Looks like you have not added anything to your cart.',
+        style: TextStyle(color: blackColor, fontSize: 15),
+      ),
+      const Padding(padding: EdgeInsets.only(top: 30)),
+      defaultButtons(pressed: startShoppingClicked, text: 'Start Shopping')
     ],
   );
 }

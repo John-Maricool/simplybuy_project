@@ -10,8 +10,8 @@ import '../../../core/reusable_widgets/reusable_widgets.dart';
 import '../../../core/state/state.dart';
 
 // ignore: must_be_immutable
-class BuyerScreen extends StatelessWidget {
-  BuyerScreen({Key? key}) : super(key: key);
+class BuyerHomeScreen extends StatelessWidget {
+  BuyerHomeScreen({Key? key}) : super(key: key);
 
   StoresAndMallsController controller = Get.find<StoresAndMallsController>();
 

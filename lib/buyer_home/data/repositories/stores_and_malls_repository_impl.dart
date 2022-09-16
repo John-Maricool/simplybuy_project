@@ -1,11 +1,12 @@
 import 'package:either_dart/either.dart';
 import 'package:simplibuy/buyer_home/domain/entities/strore_details.dart';
 import 'package:simplibuy/buyer_home/domain/repositories/stores_and_malls_list_repository.dart';
+import 'package:simplibuy/core/error_types/error_types.dart';
 import 'package:simplibuy/core/network/network_info.dart';
 import 'package:simplibuy/core/result/result.dart';
 import 'package:simplibuy/core/failure/failure.dart';
 
-class StoresAndMallsRepositoryImpl extends StoresAndMallsRepository {
+class StoresAndMallsRepositoryImpl implements StoresAndMallsRepository {
   final NetworkInfo networkInfo;
 
   StoresAndMallsRepositoryImpl(this.networkInfo);
@@ -15,10 +16,10 @@ class StoresAndMallsRepositoryImpl extends StoresAndMallsRepository {
       try {
         return Right(Result(value: malls));
       } on Exception {
-        return const Left(Failure());
+        return Left(Failure(error: ServerError()));
       }
     } else {
-      return const Left(Failure());
+      return Left(Failure(error: InternetError()));
     }
   }
 
@@ -50,10 +51,10 @@ class StoresAndMallsRepositoryImpl extends StoresAndMallsRepository {
       try {
         return Right(Result(value: stores));
       } on Exception {
-        return const Left(Failure());
+        return Left(Failure(error: ServerError()));
       }
     } else {
-      return const Left(Failure());
+      return Left(Failure(error: InternetError()));
     }
   }
 

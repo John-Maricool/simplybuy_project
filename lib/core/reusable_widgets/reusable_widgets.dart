@@ -21,15 +21,12 @@ Widget defaultLoading(BuildContext context) {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       child: Center(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: const [
-            CircularProgressIndicator(
-              color: blueColor,
-            ),
-            Text("Loading...")
-          ])));
+        child: Image.asset(
+          "assets/gifs/simpliby_loading.gif",
+          height: 100.0,
+          width: 100.0,
+        ),
+      ));
 }
 
 InputDecoration customInputDecoration(
