@@ -17,7 +17,7 @@ mixin ValidatorMixin {
     }
   }
 
-  String getNameErrors(String name) {
+  String getInputFieldErrors(String name) {
     if (name.length < 4) {
       return "length is too short";
     }

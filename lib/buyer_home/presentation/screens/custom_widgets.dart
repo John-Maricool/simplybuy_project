@@ -1,5 +1,7 @@
+import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:simplibuy/buyer_home/data/models/fav_stores_model.dart';
 import 'package:simplibuy/core/constant.dart';
 import 'package:simplibuy/buyer_home/domain/entities/strore_details.dart';
 
@@ -125,73 +127,127 @@ Widget searchInputGrey(BuildContext context) {
   ));
 }
 
-Widget storesListSingleItem({required StoreDetails details}) {
-  return Card(
-    margin: const EdgeInsets.all(5),
-    shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(8))),
-    elevation: 5,
-    color: Colors.white,
-    child: Row(
-      children: [
-        Image.asset("assets/images/shoprite_small.png"),
-        Flexible(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Align(
-            alignment: Alignment.bottomRight,
-            child: RatingBar.builder(
-                initialRating: 3,
-                itemSize: 11,
-                minRating: 1,
-                onRatingUpdate: (rating) {},
-                direction: Axis.horizontal,
-                allowHalfRating: true,
-                itemCount: 5,
-                itemBuilder: (context, _) =>
-                    const Icon(Icons.star, color: Colors.amber)),
-          ),
-          Text(details.name,
-              maxLines: 1,
-              style: const TextStyle(
-                  color: blackColor, fontSize: smallTextFontSize)),
-          Text(details.location,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(color: blackColor, fontSize: 15)),
-          Text(details.address,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(color: blackColor, fontSize: 15))
-        ]))
-      ],
-    ),
-  );
+Widget showEmptyFavorites(BuildContext context) {
+  return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: const [
+          Icon(Icons.favorite_border, size: 40),
+          Text(
+            'No favorites yet',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: blackColor, fontSize: smallTextFontSize),
+          )
+        ],
+      ));
 }
 
-Widget storesGridSingleItem({required StoreDetails details}) {
+const snackAdded = SnackBar(
+  duration: Duration(milliseconds: 1000),
+  content: Text('Item Added To Favorites'),
+);
+
+const snackRemoved = SnackBar(
+  duration: Duration(milliseconds: 1000),
+  content: Text('Item Removed from Favorites'),
+);
+
+Widget storesListSingleItem(
+    {required StoreDetails details,
+    required VoidCallback onClick,
+    required VoidCallback? onFavClicked}) {
+  return Card(
+      margin: const EdgeInsets.all(5),
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8))),
+      elevation: 5,
+      color: Colors.white,
+      child: GestureDetector(
+          onTap: onClick,
+          child: Row(
+            children: [
+              Image.asset("assets/images/shoprite_small.png"),
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: RatingBar.builder(
+                          initialRating: 3,
+                          itemSize: 11,
+                          minRating: 1,
+                          onRatingUpdate: (rating) {},
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemBuilder: (context, _) =>
+                              const Icon(Icons.star, color: Colors.amber)),
+                    ),
+                    Text(details.name,
+                        maxLines: 1,
+                        style: const TextStyle(
+                            color: blackColor, fontSize: smallTextFontSize)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(details.location,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                color: blackColor, fontSize: 15)),
+                        onFavClicked != null
+                            ? FavoriteButton(
+                                iconSize: 24,
+                                iconDisabledColor: lightBlueColor,
+                                iconColor: lightBlueColor,
+                                valueChanged: (_isFavorite) {
+                                  onFavClicked();
+                                },
+                              )
+                            : Container()
+                      ],
+                    ),
+                    Text(details.address,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(color: blackColor, fontSize: 15))
+                  ],
+                ),
+              )
+            ],
+          )));
+}
+
+Widget storesGridSingleItem(
+    {required StoreDetails details, required VoidCallback onPressed}) {
   return Card(
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(8))),
       elevation: 5,
       color: Colors.white,
-      child: SingleChildScrollView(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset("assets/images/shoprirte.png", width: 130),
-          Text(
-            details.name,
-            style:
-                const TextStyle(fontSize: smallTextFontSize, color: blackColor),
-          ),
-          Text(
-            details.location,
-            style: const TextStyle(fontSize: 15, color: blackColor),
-          ),
-          const Padding(padding: EdgeInsets.only(top: 5))
-        ],
-      )));
+      child: GestureDetector(
+          onTap: onPressed,
+          child: SingleChildScrollView(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset("assets/images/shoprirte.png", width: 130),
+              Text(
+                details.name,
+                style: const TextStyle(
+                    fontSize: smallTextFontSize, color: blackColor),
+              ),
+              Text(
+                details.location,
+                style: const TextStyle(fontSize: 15, color: blackColor),
+              ),
+              const Padding(padding: EdgeInsets.only(top: 5))
+            ],
+          ))));
 }
 
 Widget noInternet(VoidCallback startShoppingClicked) {
@@ -214,9 +270,7 @@ Widget noInternet(VoidCallback startShoppingClicked) {
       ),
       const Padding(padding: EdgeInsets.only(top: 30)),
       defaultButtons(
-          pressed: startShoppingClicked,
-          text: 'Try Again',
-          size: const Size(120, 50))
+          pressed: startShoppingClicked, text: 'Try Again', size: Size(120, 50))
     ],
   );
 }

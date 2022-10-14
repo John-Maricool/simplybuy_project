@@ -11,5 +11,6 @@ class MainBinding implements Bindings {
         () async => await AppDatabase.getDb() as Future<AppDatabase>);
     AppDatabase db = await result;
     Get.put(db.cartDao);
+    Get.put(db.favDao);
   }
 }

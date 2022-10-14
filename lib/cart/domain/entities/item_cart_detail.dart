@@ -2,8 +2,8 @@ import 'package:floor/floor.dart';
 
 @entity
 class ItemCartDetails {
-  @PrimaryKey(autoGenerate: true)
-  final int? id;
+  @PrimaryKey(autoGenerate: false)
+  final int id;
   final String storeName;
   final int storeId;
   final String itemName;
@@ -13,7 +13,7 @@ class ItemCartDetails {
   double get totalPrice => itemPieces * itemPrice;
 
   ItemCartDetails(
-      {this.id,
+      {required this.id,
       required this.storeName,
       required this.storeId,
       required this.itemName,

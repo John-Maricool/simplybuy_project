@@ -3,8 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simplibuy/buyer_home/presentation/screens/buyer_screen.dart';
+import 'package:simplibuy/buyer_home/presentation/screens/fav_stores_screen.dart';
 import 'package:simplibuy/cart/presentation/screens/cart_list_screen.dart';
 import 'package:simplibuy/core/constant.dart';
+import 'package:simplibuy/history/presentation/screens/history_screen.dart';
 import '../controller/buyer_home_navigation_controller.dart';
 
 class BuyerBottomNavScreen extends StatelessWidget {
@@ -18,8 +20,14 @@ class BuyerBottomNavScreen extends StatelessWidget {
     return Scaffold(
         bottomNavigationBar: bottomNavDrawer(),
         body: Obx(() {
-          if (controller.currentPage == 0) return BuyerHomeScreen();
-          return CartList();
+          if (controller.currentPage == 0) {
+            return BuyerHomeScreen();
+          } else if (controller.currentPage == 1) {
+            return CartList();
+          } else if (controller.currentPage == 2) {
+            return HistoryScreen();
+          }
+          return FavStoresScreen();
         }));
   }
 
@@ -31,7 +39,7 @@ class BuyerBottomNavScreen extends StatelessWidget {
           bottomNavItem(Icons.home, 'Home'),
           bottomNavItem(Icons.shopping_cart, 'Cart'),
           bottomNavItem(Icons.shopping_bag, 'History'),
-          bottomNavItem(Icons.person, 'Profile'),
+          bottomNavItem(Icons.favorite_border, 'Favorites'),
         ],
         unselectedItemColor: Colors.grey,
         backgroundColor: whiteColor,

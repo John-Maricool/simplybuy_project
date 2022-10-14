@@ -11,6 +11,8 @@ abstract class ErrorType extends Equatable {
 // ignore: must_be_immutable
 class InternetError extends ErrorType implements Equatable {
   @override
+  String get errMessage => "No Internet";
+  @override
   List<Object> get props => [errMessage];
 
   @override

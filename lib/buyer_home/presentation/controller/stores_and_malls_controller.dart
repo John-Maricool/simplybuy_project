@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:simplibuy/buyer_home/domain/entities/strore_details.dart';
 import 'package:simplibuy/buyer_home/domain/usecases/stores_and_malls_usecase.dart';
 import '../../../core/state/state.dart';
+import '../../domain/usecases/stores_and_malls_fav_usecase.dart';
 
 class StoresAndMallsController extends GetxController {
   @override
@@ -11,8 +12,10 @@ class StoresAndMallsController extends GetxController {
   }
 
   final StoresAndMallsUsecase usecase;
+  // ignore: non_constant_identifier_names
+  final StoresAndMallsFavUsecase usecaseFav;
 
-  StoresAndMallsController({required this.usecase});
+  StoresAndMallsController({required this.usecase, required this.usecaseFav});
 
   final RxBool _isStore = true.obs;
   bool get isStore => _isStore.value;
@@ -51,6 +54,10 @@ class StoresAndMallsController extends GetxController {
       _details.value = result.right.value;
       _state.value = FinishedState();
     }
+  }
+
+  addToFav(int position) {
+    usecaseFav.addStoreToFavorite(details[position]);
   }
 
   Future<void> getMalls() async {

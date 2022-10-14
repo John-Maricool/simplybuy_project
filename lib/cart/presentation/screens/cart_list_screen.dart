@@ -6,32 +6,31 @@ import 'package:simplibuy/cart/presentation/screens/custom_widgets.dart';
 import 'package:simplibuy/core/error_types/error_types.dart';
 import 'package:simplibuy/core/reusable_widgets/reusable_widgets.dart';
 import 'package:simplibuy/core/state/state.dart';
-import '../../../core/constant.dart';
+import '../../../buyer_home/presentation/controller/buyer_home_navigation_controller.dart';
 import '../../../core/local_db/cart_dao.dart';
 
 // ignore: must_be_immutable
 class CartList extends StatelessWidget {
   CartList({Key? key}) : super(key: key);
 
+  BuyerHomeNavigationController navController =
+      Get.find<BuyerHomeNavigationController>();
+
   CartListController controller = Get.find<CartListController>();
-  CartDao dao = Get.find<CartDao>();
 
   @override
   Widget build(BuildContext context) {
-    // addToCart();
+    controller.getAllItemsInCart();
     return Scaffold(
-        appBar: AppBar(
-          elevation: 3,
-          title: const Text(
-            "Cart",
-            style: TextStyle(color: blackColor, fontSize: 18.0),
-          ),
-          backgroundColor: whiteColor,
-        ),
+        appBar: customAppBar(
+            text: "Cart",
+            onPressed: () {
+              navController.changePage(0);
+            }),
         body: Container(
             padding: const EdgeInsets.all(10),
             child: Obx(() {
-              if (controller.state == LoadingState()) {
+              if (controller.state is LoadingState) {
                 return defaultLoading(context);
               }
               if (controller.state == ErrorState(errorType: EmptyListError())) {
@@ -40,11 +39,17 @@ class CartList extends StatelessWidget {
                 return ListView(children: [
                   cartList(context),
                   const Padding(padding: EdgeInsets.only(top: 10)),
-                  calculations(context),
+                  Obx(() {
+                    return controller.cartItems.isEmpty
+                        ? Container()
+                        : calculations(context);
+                  }),
                   const Padding(padding: EdgeInsets.only(top: 10)),
-                  defaultButtons(pressed: () {}, text: 'Reserve Item'),
-                  const Padding(padding: EdgeInsets.only(top: 10)),
-                  defaultButtons(pressed: () {}, text: 'I want this delivered')
+                  Obx(() {
+                    return controller.cartItems.isEmpty
+                        ? Container()
+                        : defaultButtons(pressed: () {}, text: 'Reserve Item');
+                  }),
                 ]);
               }
             })));
@@ -123,59 +128,5 @@ class CartList extends StatelessWidget {
             )
           ],
         ));
-  }
-
-  addToCart() async {
-    List<ItemCartDetails> items = [
-      ItemCartDetails(
-          storeName: "Mummy Kitchen 1",
-          storeId: 2,
-          itemName: "Bag of Rice and Beans",
-          itemPieces: 2,
-          itemPrice: 2333),
-      ItemCartDetails(
-          storeName: "Mummy Kitchen 2",
-          storeId: 2,
-          itemName: "Bag of Rice and Beans",
-          itemPieces: 2,
-          itemPrice: 2333),
-      ItemCartDetails(
-          storeName: "Mummy Kitchen 3",
-          storeId: 2,
-          itemName: "Bag of Rice and Beans",
-          itemPieces: 2,
-          itemPrice: 2333),
-      ItemCartDetails(
-          storeName: "Mummy Kitchen 4",
-          storeId: 2,
-          itemName: "Bag of Rice and Beans",
-          itemPieces: 2,
-          itemPrice: 2333),
-      ItemCartDetails(
-          storeName: "Mummy Kitchen 5",
-          storeId: 2,
-          itemName: "Bag of Rice and Beans",
-          itemPieces: 2,
-          itemPrice: 2333),
-      ItemCartDetails(
-          storeName: "Mummy Kitchen 6",
-          storeId: 2,
-          itemName: "Bag of Rice and Beans",
-          itemPieces: 2,
-          itemPrice: 2333),
-      ItemCartDetails(
-          storeName: "Mummy Kitchen 7",
-          storeId: 2,
-          itemName: "Bag of Rice and Beans",
-          itemPieces: 2,
-          itemPrice: 2333),
-      ItemCartDetails(
-          storeName: "Mummy Kitchen 8",
-          storeId: 2,
-          itemName: "Bag of Rice and Beans",
-          itemPieces: 2,
-          itemPrice: 2333),
-    ];
-    items.forEach((item) => dao.addToCart(item));
   }
 }

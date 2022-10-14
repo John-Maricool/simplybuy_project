@@ -36,14 +36,14 @@ InputDecoration customInputDecoration(
       errorText: errorText,
       labelText: label,
       enabledBorder: const OutlineInputBorder(
-        borderSide: BorderSide(width: 1, color: blackColor),
+        borderSide: BorderSide(width: 2, color: blueColor),
       ),
       focusedBorder: const OutlineInputBorder(
-        borderSide: BorderSide(width: 1, color: lightBlueColor),
+        borderSide: BorderSide(width: 2, color: lightBlueColor),
       ),
       suffixIcon: icon,
       errorBorder: const OutlineInputBorder(
-        borderSide: BorderSide(width: 1, color: errorColor),
+        borderSide: BorderSide(width: 2, color: errorColor),
       ));
 }
 
@@ -98,7 +98,9 @@ Widget ordinaryAndClickableText(
 }
 
 PreferredSizeWidget customAppBar(
-    {required String text, required VoidCallback onPressed}) {
+    {required String text,
+    required VoidCallback onPressed,
+    List<Widget>? actions}) {
   return AppBar(
     elevation: 0.0,
     title: Text(
@@ -106,6 +108,7 @@ PreferredSizeWidget customAppBar(
       style: const TextStyle(color: blackColor, fontSize: 18.0),
     ),
     backgroundColor: whiteColor,
+    actions: actions,
     automaticallyImplyLeading: false,
     leading: IconButton(
       onPressed: onPressed,
@@ -136,4 +139,21 @@ Widget bottmNavItemWithIcon(
               recognizer: TapGestureRecognizer()..onTap = onClick))
     ],
   );
+}
+
+Widget noInternetConnection(BuildContext context) {
+  return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      height: 35,
+      child: Card(
+        color: Colors.red,
+        child: Row(children: [
+          Image.asset('assets/images/no_nwk_auth.png'),
+          const Padding(padding: EdgeInsets.only(left: 4)),
+          const Text(
+            'No internet connection, please try again',
+            style: TextStyle(color: whiteColor, fontSize: smallerTextFontSize),
+          )
+        ]),
+      ));
 }

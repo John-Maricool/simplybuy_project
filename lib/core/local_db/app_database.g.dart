@@ -63,6 +63,8 @@ class _$AppDatabase extends AppDatabase {
 
   CartDao? _cartDaoInstance;
 
+  FavStoresDao? _favDaoInstance;
+
   Future<sqflite.Database> open(String path, List<Migration> migrations,
       [Callback? callback]) async {
     final databaseOptions = sqflite.OpenDatabaseOptions(
@@ -82,7 +84,9 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `ItemCartDetails` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `storeName` TEXT NOT NULL, `storeId` INTEGER NOT NULL, `itemName` TEXT NOT NULL, `itemPieces` INTEGER NOT NULL, `itemPrice` REAL NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `ItemCartDetails` (`id` INTEGER NOT NULL, `storeName` TEXT NOT NULL, `storeId` INTEGER NOT NULL, `itemName` TEXT NOT NULL, `itemPieces` INTEGER NOT NULL, `itemPrice` REAL NOT NULL, PRIMARY KEY (`id`))');
+        await database.execute(
+            'CREATE TABLE IF NOT EXISTS `FavStoresModel` (`id` INTEGER NOT NULL, `storeName` TEXT NOT NULL, `location` TEXT NOT NULL, `storeAddress` TEXT NOT NULL, `imageLogo` TEXT NOT NULL, `rating` INTEGER NOT NULL, PRIMARY KEY (`id`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -93,6 +97,11 @@ class _$AppDatabase extends AppDatabase {
   @override
   CartDao get cartDao {
     return _cartDaoInstance ??= _$CartDao(database, changeListener);
+  }
+
+  @override
+  FavStoresDao get favDao {
+    return _favDaoInstance ??= _$FavStoresDao(database, changeListener);
   }
 }
 
@@ -121,10 +130,16 @@ class _$CartDao extends CartDao {
   final InsertionAdapter<ItemCartDetails> _itemCartDetailsInsertionAdapter;
 
   @override
+  Future<double?> totalResults() async {
+    await _queryAdapter
+        .queryNoReturn('SELECT  SUM(totalPrice) FROM ItemCartDetails');
+  }
+
+  @override
   Stream<List<ItemCartDetails>> getAllCartItems() {
     return _queryAdapter.queryListStream('SELECT * FROM ItemCartDetails',
         mapper: (Map<String, Object?> row) => ItemCartDetails(
-            id: row['id'] as int?,
+            id: row['id'] as int,
             storeName: row['storeName'] as String,
             storeId: row['storeId'] as int,
             itemName: row['itemName'] as String,
@@ -152,5 +167,57 @@ class _$CartDao extends CartDao {
   Future<void> addToCart(ItemCartDetails item) async {
     await _itemCartDetailsInsertionAdapter.insert(
         item, OnConflictStrategy.abort);
+  }
+}
+
+class _$FavStoresDao extends FavStoresDao {
+  _$FavStoresDao(this.database, this.changeListener)
+      : _queryAdapter = QueryAdapter(database, changeListener),
+        _favStoresModelInsertionAdapter = InsertionAdapter(
+            database,
+            'FavStoresModel',
+            (FavStoresModel item) => <String, Object?>{
+                  'id': item.id,
+                  'storeName': item.storeName,
+                  'location': item.location,
+                  'storeAddress': item.storeAddress,
+                  'imageLogo': item.imageLogo,
+                  'rating': item.rating
+                },
+            changeListener);
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  final InsertionAdapter<FavStoresModel> _favStoresModelInsertionAdapter;
+
+  @override
+  Stream<List<FavStoresModel>> getAllFavStores() {
+    return _queryAdapter.queryListStream('SELECT * FROM FavStoresModel',
+        mapper: (Map<String, Object?> row) => FavStoresModel(
+            id: row['id'] as int,
+            storeName: row['storeName'] as String,
+            imageLogo: row['imageLogo'] as String,
+            location: row['location'] as String,
+            storeAddress: row['storeAddress'] as String,
+            rating: row['rating'] as int),
+        queryableName: 'FavStoresModel',
+        isView: false);
+  }
+
+  @override
+  Future<void> removeFromFav(int id) async {
+    await _queryAdapter.queryNoReturn(
+        'DELETE FROM FavStoresModel WHERE id = ?1',
+        arguments: [id]);
+  }
+
+  @override
+  Future<void> addToFavorite(FavStoresModel item) async {
+    await _favStoresModelInsertionAdapter.insert(
+        item, OnConflictStrategy.replace);
   }
 }

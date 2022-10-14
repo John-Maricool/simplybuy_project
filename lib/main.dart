@@ -9,9 +9,19 @@ import 'package:simplibuy/buyer_home/presentation/screens/stores_and_malls_scree
 import 'package:simplibuy/cart/presentation/screens/cart_list_screen.dart';
 import 'package:simplibuy/core/constant.dart';
 import 'package:simplibuy/core/constants/route_constants.dart';
+import 'package:simplibuy/history/presentation/screens/history_screen.dart';
 import 'package:simplibuy/main_binding.dart';
 import 'package:get/get.dart';
 import 'package:simplibuy/buyer_home/presentation/screens/buyer_home_drawers.dart';
+import 'package:simplibuy/other_screens/splash_screen.dart';
+import 'package:simplibuy/profile/presentation/binding/profile_screen_binding.dart';
+import 'package:simplibuy/profile/presentation/screens/profile_screen.dart';
+import 'package:simplibuy/store_and_product/presentation/binding/product_binding.dart';
+import 'package:simplibuy/store_and_product/presentation/binding/products_list_binding.dart';
+import 'package:simplibuy/store_and_product/presentation/binding/store_info_binding.dart';
+import 'package:simplibuy/store_and_product/presentation/screens/product_screen.dart';
+import 'package:simplibuy/store_and_product/presentation/screens/product_via_category.dart';
+import 'package:simplibuy/store_and_product/presentation/screens/store_info_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -29,7 +39,7 @@ class MyApp extends StatelessWidget {
       initialBinding: MainBinding(),
       theme: ThemeData(
           primarySwatch: Colors.blue, scaffoldBackgroundColor: whiteColor),
-      home: const UserType(),
+      home: SplashScreen(),
     );
   }
 
@@ -39,9 +49,18 @@ class MyApp extends StatelessWidget {
         page: () => LoginForm(),
         binding: LoginScreenBinding()),
     GetPage(
+        name: SINGLE_STORE_ROUTE,
+        page: () => StoreInfoScreen(),
+        arguments: "id",
+        binding: StoreInfoBinding()),
+    GetPage(
         name: SIGNUP_ROUTE,
         page: () => SignUpForm(),
         binding: SignupScreenBinding()),
+    GetPage(
+        name: PROFILE_SCREEN,
+        page: () => ProfileScreen(),
+        binding: ProfileScreenBinding()),
     GetPage(
       name: BUYER_HOME_PAGE_ROUTE,
       binding: BuyerHomeBottomNavScreensBindings(),
@@ -57,5 +76,14 @@ class MyApp extends StatelessWidget {
       page: () => CartList(),
       binding: BuyerHomeBottomNavScreensBindings(),
     ),
+    GetPage(
+        name: PRODUCTS_LIST_SCREEN,
+        page: () => ProductsListScreen(),
+        binding: ProductListBinding()),
+    GetPage(
+        name: PRODUCT_SCREEN,
+        page: () => ProductScreen(),
+        binding: ProductBinding()),
+    GetPage(name: HISTORY_SCREEN, page: () => HistoryScreen())
   ];
 }

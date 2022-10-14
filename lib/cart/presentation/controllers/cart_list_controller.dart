@@ -21,18 +21,13 @@ class CartListController extends GetxController {
   final _state = const State().obs;
   State get state => _state.value;
 
-  @override
-  void onInit() {
-    super.onInit();
-    getAllItemsInCart();
-  }
-
   Future<void> getAllItemsInCart() async {
     _state.value = LoadingState();
     var result = await usecase.getItemsInCart();
     result.fold((left) => _state.value = ErrorState(errorType: left.error),
         (right) {
       _cartItems.value = right.value;
+      print(result);
       _updatePrice();
       _state.value = FinishedState();
     });

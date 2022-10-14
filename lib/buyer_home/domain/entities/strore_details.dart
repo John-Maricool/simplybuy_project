@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class StoreDetails extends Equatable {
+  final int id;
   final String name;
   final String location;
   final String address =
@@ -8,7 +9,8 @@ class StoreDetails extends Equatable {
   final String imageLogo = "";
   final int ratings = 0;
 
-  const StoreDetails({required this.name, required this.location});
+  const StoreDetails(
+      {required this.id, required this.name, required this.location});
 
   @override
   List<Object?> get props => [name, location, address, imageLogo, ratings];

@@ -98,11 +98,17 @@ class BuyerHomeScreen extends StatelessWidget {
                     username: "Ikenwa Ebuka"),
               ),
               _titleAndIcon(
-                  data: Icons.person, text: "My Account", onClick: () {}),
+                  data: Icons.person,
+                  text: "My Account",
+                  onClick: () => Get.toNamed(PROFILE_SCREEN)),
               _titleAndIcon(
-                  data: Icons.history, text: "History", onClick: () {}),
+                  data: Icons.history,
+                  text: "History",
+                  onClick: () => Get.toNamed(HISTORY_SCREEN)),
               _titleAndIcon(
-                  data: Icons.shopping_cart, text: "Cart", onClick: () {}),
+                  data: Icons.shopping_cart,
+                  text: "Cart",
+                  onClick: () => Get.toNamed(CART_LIST_SCREEN)),
               _titleAndIcon(
                   data: Icons.star_rate_sharp, text: "Rate", onClick: () {}),
               _titleAndIcon(data: Icons.report, text: "Report", onClick: () {}),
@@ -126,13 +132,16 @@ class BuyerHomeScreen extends StatelessWidget {
               alignment: Alignment.center,
               child: Column(children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(40),
-                  child: Image(
-                    width: 80,
-                    height: 80,
-                    image: NetworkImage(url),
-                  ),
-                ),
+                    borderRadius: BorderRadius.circular(40),
+                    child: FadeInImage.assetNetwork(
+                        width: 80,
+                        height: 80,
+                        fit: BoxFit.cover,
+                        placeholder: 'assets/gifs/simpliby_loading.gif',
+                        imageErrorBuilder: (context, error, stackTrace) {
+                          return const Icon(Icons.account_circle);
+                        },
+                        image: url)),
                 Text(
                   username,
                   style: const TextStyle(
@@ -199,9 +208,10 @@ class BuyerHomeScreen extends StatelessWidget {
           children: List.generate(
               controller.details.length,
               (index) => Center(
-                    child: storesGridSingleItem(
-                        details: controller.details[index]),
-                  )));
+                  child: storesGridSingleItem(
+                      details: controller.details[index],
+                      onPressed: () => Get.toNamed(SINGLE_STORE_ROUTE,
+                          arguments: controller.details[index].id)))));
     });
   }
 

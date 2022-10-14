@@ -68,13 +68,13 @@ class SignupScreenController extends GetxController with ValidatorMixin {
 
   addName(String data) {
     _name = data;
-    _nameError.value = getNameErrors(data);
+    _nameError.value = getInputFieldErrors(data);
   }
 
   bool _validateEmailAndPassword() {
     String emailErrors = getEmailErrors(_email);
     String passwordErrors = getPasswordErrors(_password);
-    String nameErrors = getNameErrors(_name);
+    String nameErrors = getInputFieldErrors(_name);
     if (emailErrors.isEmpty &&
         passwordErrors.isEmpty &&
         nameErrors.isEmpty &&

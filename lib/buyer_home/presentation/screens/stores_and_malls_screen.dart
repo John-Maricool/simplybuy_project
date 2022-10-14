@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simplibuy/buyer_home/presentation/screens/custom_widgets.dart';
 import 'package:simplibuy/core/constant.dart';
+import 'package:simplibuy/core/constants/route_constants.dart';
 import 'package:simplibuy/core/reusable_widgets/reusable_widgets.dart';
 import '../controller/stores_and_malls_controller.dart';
 
@@ -34,7 +35,14 @@ class StoresAndMallsScreen extends StatelessWidget {
     return ListView.builder(
         itemCount: controller.details.length,
         itemBuilder: (context, position) {
-          return storesListSingleItem(details: controller.details[position]);
+          return storesListSingleItem(
+              details: controller.details[position],
+              onClick: () => Get.toNamed(SINGLE_STORE_ROUTE,
+                  arguments: controller.details[position].id),
+              onFavClicked: () {
+                controller.addToFav(position);
+                ScaffoldMessenger.of(context).showSnackBar(snackAdded);
+              });
         });
   }
 }

@@ -5,6 +5,7 @@ import 'package:simplibuy/authentication/presentation/screens/forgot_password/fo
 import 'package:simplibuy/core/constants/route_constants.dart';
 import 'package:simplibuy/core/reusable_widgets/reusable_widgets.dart';
 import 'package:simplibuy/core/constant.dart';
+import '../../../../core/error_types/error_types.dart';
 import '../../../../core/state/state.dart';
 import '../../screen_model_controllers/login_screen_controller.dart';
 
@@ -18,40 +19,27 @@ class LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: BottomAppBar(
-          color: Colors.transparent,
-          elevation: 0,
-          child: Container(
-            child: ordinaryAndClickableText(
-                text: "New here?",
-                clickableText: " Sign up",
-                onClicked: () {
-                  Get.toNamed(SIGNUP_ROUTE);
-                }),
-          ),
-        ),
         body: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
             margin: const EdgeInsets.all(defaultPadding),
             // child: Center(
             child: SingleChildScrollView(child: Obx(() {
               if (controller.state is LoadingState) {
                 return defaultLoading(context);
               }
-              if (controller.state is ErrorState) return const Text("Error");
-              return login();
+              return login(context);
             }))));
   }
 
-  Widget login() {
+  Widget login(BuildContext context) {
     return Column(
       children: [
         imageFromAssetsFolder(
             width: 120.0,
             height: 50.0,
             path: 'assets/images/simplibuy_logo_small.png'),
-        const Padding(
-          padding: EdgeInsets.only(top: defaultPadding),
-        ),
+        showConnectionError(context),
         signIn(),
         const Padding(
           padding: EdgeInsets.only(top: defaultPadding),
@@ -79,6 +67,15 @@ class LoginForm extends StatelessWidget {
             clickableSmallButton(onPressed: () {}, path: 'assets/images/fb.png')
           ],
         ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: ordinaryAndClickableText(
+              text: "New here?",
+              clickableText: " Sign up",
+              onClicked: () {
+                Get.toNamed(SIGNUP_ROUTE);
+              }),
+        )
       ],
     );
   }
@@ -164,6 +161,17 @@ class LoginForm extends StatelessWidget {
         )
       ],
     );
+  }
+
+  Widget showConnectionError(BuildContext context) {
+    return Obx(() {
+      if (controller.state == ErrorState(errorType: InternetError())) {
+        return noInternetConnection(context);
+      }
+      return const Padding(
+        padding: EdgeInsets.only(top: 15.0),
+      );
+    });
   }
 
   Widget submitButton() {

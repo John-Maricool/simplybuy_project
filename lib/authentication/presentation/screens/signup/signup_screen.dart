@@ -1,12 +1,11 @@
 // ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simplibuy/authentication/presentation/screen_model_controllers/signup_screen_controller.dart';
 import 'package:simplibuy/core/constants/route_constants.dart';
+import 'package:simplibuy/core/error_types/error_types.dart';
 import 'package:simplibuy/core/reusable_widgets/reusable_widgets.dart';
 import 'package:simplibuy/core/constant.dart';
-
 import '../../../../core/state/state.dart';
 
 class SignUpForm extends StatelessWidget {
@@ -24,18 +23,18 @@ class SignUpForm extends StatelessWidget {
               if (controller.state is LoadingState) {
                 return defaultLoading(context);
               }
-              if (controller.state is ErrorState) return const Text("Error");
-              return signUp();
+              return signUp(context);
             }))));
   }
 
-  Widget signUp() {
+  Widget signUp(BuildContext context) {
     return Column(
       children: [
         imageFromAssetsFolder(
             width: 120.0,
             height: 50.0,
             path: 'assets/images/simplibuy_logo_small.png'),
+        showConnectionError(context),
         const Padding(
           padding: EdgeInsets.only(top: defaultPadding),
         ),
@@ -95,6 +94,17 @@ class SignUpForm extends StatelessWidget {
               fontSize: largeTextFontSize,
               fontWeight: largeTextFontWeight),
         ));
+  }
+
+  Widget showConnectionError(BuildContext context) {
+    return Obx(() {
+      if (controller.state == ErrorState(errorType: InternetError())) {
+        return noInternetConnection(context);
+      }
+      return const Padding(
+        padding: EdgeInsets.only(top: 15.0),
+      );
+    });
   }
 
   Widget emailField() {
