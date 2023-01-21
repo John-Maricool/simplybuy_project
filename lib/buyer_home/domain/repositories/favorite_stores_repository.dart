@@ -3,7 +3,6 @@ import 'package:simplibuy/buyer_home/domain/entities/strore_details.dart';
 
 import '../../../core/failure/failure.dart';
 import '../../../core/result/result.dart';
-import '../../data/models/fav_stores_model.dart';
 
 abstract class FavStoresAndMallsRepository {
   addStoreToFavorite(StoreDetails storeDetails);

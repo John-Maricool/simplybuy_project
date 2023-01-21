@@ -39,25 +39,25 @@ class ProductScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Padding(padding: EdgeInsets.only(top: 30)),
+              const Padding(padding: EdgeInsets.only(top: 30)),
               Text(product.productName,
                   style: const TextStyle(
                       color: blackColor,
                       fontSize: 23,
                       fontWeight: FontWeight.bold)),
-              Padding(padding: EdgeInsets.only(top: 10)),
+              const Padding(padding: EdgeInsets.only(top: 10)),
               Text(product.productDescription,
                   style: const TextStyle(
                       color: blackColor,
                       fontSize: 18,
                       fontWeight: FontWeight.normal)),
-              Padding(padding: EdgeInsets.only(top: 20)),
+              const Padding(padding: EdgeInsets.only(top: 20)),
               Text('Price: ${product.productPrice}',
                   style: const TextStyle(color: blackColor, fontSize: 20)),
-              Padding(padding: EdgeInsets.only(top: 10)),
+              const Padding(padding: EdgeInsets.only(top: 10)),
               Text('Shelf details: ${product.shelfDetails}',
                   style: const TextStyle(color: blackColor, fontSize: 20)),
-              Padding(padding: EdgeInsets.only(top: 20)),
+              const Padding(padding: EdgeInsets.only(top: 20)),
               Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
                 defaultButtons(
                     pressed: () {},

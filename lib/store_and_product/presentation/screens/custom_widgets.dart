@@ -342,7 +342,7 @@ Widget _productTexts(
               child: Container(
             width: 80,
             decoration: const BoxDecoration(
-              color: blueColor,
+              color: Color.fromRGBO(67, 64, 65, 0.5),
               borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5)),
             ),
             child: Column(
@@ -483,8 +483,8 @@ Widget imageSlidersProduct(BuildContext context, List<String> images) {
                         blurStyle: BlurStyle.outer),
                   ],
                   borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(120),
-                      bottomRight: Radius.circular(120))),
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20))),
               child: FadeInImage.assetNetwork(
                   fit: BoxFit.fill,
                   placeholder: defaultProductImage,

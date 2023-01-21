@@ -24,12 +24,16 @@ class StoresAndMallsRepositoryImpl implements StoresAndMallsRepository {
   }
 
   List<StoreDetails> stores = const <StoreDetails>[
-    StoreDetails(id: 0, name: 'Shoprite Stores', location: "New Haven, Enugu"),
+    StoreDetails(
+        id: 0,
+        name: 'Stores Stores Stores Stores',
+        location: "New Haven, Enugu"),
     StoreDetails(id: 1, name: 'Roban Stores', location: "Old Haven, Enugu"),
     StoreDetails(id: 3, name: 'Spar Stores', location: "New Haven, Enugu"),
     StoreDetails(id: 5, name: 'Shoprite Stores', location: "New Haven, Enugu"),
     StoreDetails(id: 6, name: 'Shoprite Stores', location: "New Haven, Enugu"),
-    StoreDetails(id: 7, name: 'Home', location: "Perfect"),
+    StoreDetails(
+        id: 7, name: 'Home stores StoresStoresStores', location: "Perfect"),
     StoreDetails(id: 8, name: 'Home', location: "Perfect"),
     StoreDetails(id: 9, name: 'Home', location: "Perfect"),
   ];

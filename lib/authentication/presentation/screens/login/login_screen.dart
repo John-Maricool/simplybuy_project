@@ -59,14 +59,6 @@ class LoginForm extends StatelessWidget {
           padding: EdgeInsets.only(top: defaultPadding),
         ),
         submitButton(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            clickableSmallButton(
-                onPressed: () {}, path: 'assets/images/google.png'),
-            clickableSmallButton(onPressed: () {}, path: 'assets/images/fb.png')
-          ],
-        ),
         Align(
           alignment: Alignment.bottomCenter,
           child: ordinaryAndClickableText(

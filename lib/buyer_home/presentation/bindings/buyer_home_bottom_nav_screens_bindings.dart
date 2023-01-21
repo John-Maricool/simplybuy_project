@@ -9,6 +9,10 @@ import 'package:simplibuy/buyer_home/presentation/controller/stores_and_malls_co
 import 'package:simplibuy/core/local_db/cart_dao.dart';
 import 'package:simplibuy/core/local_db/fav_stores_dao.dart';
 import 'package:simplibuy/core/network/network_info.dart';
+import 'package:simplibuy/history/data/repositories/history_data_impl.dart';
+import 'package:simplibuy/history/domain/repositories/history_data_repo.dart';
+import 'package:simplibuy/history/domain/usecases/history_data_usecase.dart';
+import 'package:simplibuy/history/presentation/controller/history_data_controller.dart';
 
 import '../../../cart/data/repository/cart_list_repository_impl.dart';
 import '../../../cart/domain/repository/cart_list_repository.dart';
@@ -26,6 +30,7 @@ class BuyerHomeBottomNavScreensBindings implements Bindings {
     _getStoresAndMallsController(info);
     _getCartListControllers();
     _getFavStoresControllers();
+    _getHistoryController(info);
   }
 
   _getStoresAndMallsController(NetworkInfo info) {
@@ -56,5 +61,11 @@ class BuyerHomeBottomNavScreensBindings implements Bindings {
         StoresAndMallsFavUsecase(Get.find<FavStoresAndMallsRepository>()));
     Get.lazyPut<FavScreenController>(() =>
         FavScreenController(usecase: Get.find<StoresAndMallsFavUsecase>()));
+  }
+
+  _getHistoryController(NetworkInfo info) {
+    Get.lazyPut<HistoryDataRepo>(() => HistoryDataImpl(info));
+    Get.lazyPut(() => HistoryDataUsecase(Get.find<HistoryDataRepo>()));
+    Get.lazyPut(() => HistoryDataController(Get.find<HistoryDataUsecase>()));
   }
 }

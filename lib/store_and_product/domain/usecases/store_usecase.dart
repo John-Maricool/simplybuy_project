@@ -11,12 +11,14 @@ class StoreUsecase {
   StoreUsecase(this.repo);
 
   getStoreInfo(
-      int id, Function(Either<Failure, Result<StoreInfo>> res) callback) {
-    repo.getStoreInfo(id).then((value) => callback.call(value));
+      int id, Function(Either<Failure, Result<StoreInfo>> res) callback) async {
+    await repo.getStoreInfo(id).then((value) => callback.call(value));
   }
 
-  getStoreCategories(int id,
-      Function(Either<Failure, Result<List<StoreCategory>>> res) callback) {
-    return repo.getStoreCategories(id).then((value) => callback.call(value));
+  getStoreCategories(
+      int id,
+      Function(Either<Failure, Result<List<StoreCategory>>> res)
+          callback) async {
+    await repo.getStoreCategories(id).then((value) => callback.call(value));
   }
 }

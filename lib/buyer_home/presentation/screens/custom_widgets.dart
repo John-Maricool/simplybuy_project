@@ -69,11 +69,15 @@ Widget customButtonWithIcon(
 }
 
 Widget filterOption(VoidCallback onPressed) {
-  return Ink(
+  return Container(
+      height: 45,
+      width: 45,
+      clipBehavior: Clip.hardEdge,
       decoration: const ShapeDecoration(
           color: blueColor,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(8)))),
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+          )),
       child: IconButton(
           iconSize: 25,
           color: whiteColor,
@@ -83,26 +87,29 @@ Widget filterOption(VoidCallback onPressed) {
 
 Widget searchInputBlue(BuildContext context) {
   return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.75,
-      child: TextField(
-        decoration: InputDecoration(
-          prefixIcon: const Icon(
-            Icons.search,
-            color: blueColor,
-          ),
-          enabledBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-            borderSide: BorderSide(width: 3, color: blueColor),
-          ),
-          focusedBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-            borderSide: BorderSide(width: 3, color: blueColor),
-          ),
-          hintText: "Where do you want to shop?",
-          hintStyle: TextStyle(color: Colors.grey[800]),
-        ),
-        textAlign: TextAlign.left,
-      ));
+      height: 45,
+      width: MediaQuery.of(context).size.width * 0.78,
+      child: Align(
+          alignment: Alignment.center,
+          child: TextField(
+            decoration: InputDecoration(
+              prefixIcon: const Icon(
+                Icons.search,
+                color: blueColor,
+              ),
+              enabledBorder: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+                borderSide: BorderSide(width: 3, color: blueColor),
+              ),
+              focusedBorder: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+                borderSide: BorderSide(width: 3, color: blueColor),
+              ),
+              hintText: "Where do you want to shop?",
+              hintStyle: TextStyle(color: Colors.grey[800]),
+            ),
+            textAlign: TextAlign.center,
+          )));
 }
 
 Widget searchInputGrey(BuildContext context) {
@@ -204,11 +211,11 @@ Widget storesListSingleItem(
                                 iconSize: 24,
                                 iconDisabledColor: lightBlueColor,
                                 iconColor: lightBlueColor,
-                                valueChanged: (_isFavorite) {
+                                valueChanged: (isFavorite) {
                                   onFavClicked();
                                 },
                               )
-                            : Container()
+                            : Container(),
                       ],
                     ),
                     Text(details.address,
@@ -223,31 +230,60 @@ Widget storesListSingleItem(
 }
 
 Widget storesGridSingleItem(
-    {required StoreDetails details, required VoidCallback onPressed}) {
-  return Card(
-      shape: const RoundedRectangleBorder(
+    {required StoreDetails details,
+    required VoidCallback onPressed,
+    required VoidCallback onFavClicked}) {
+  return Container(
+      width: 130,
+      decoration: const BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              offset: Offset(0.0, 1.0), //(x,y)
+              blurRadius: 6.0,
+            ),
+          ],
           borderRadius: BorderRadius.all(Radius.circular(8))),
-      elevation: 5,
-      color: Colors.white,
-      child: GestureDetector(
-          onTap: onPressed,
-          child: SingleChildScrollView(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset("assets/images/shoprirte.png", width: 130),
-              Text(
-                details.name,
-                style: const TextStyle(
-                    fontSize: smallTextFontSize, color: blackColor),
-              ),
-              Text(
-                details.location,
-                style: const TextStyle(fontSize: 15, color: blackColor),
-              ),
-              const Padding(padding: EdgeInsets.only(top: 5))
-            ],
-          ))));
+      clipBehavior: Clip.hardEdge,
+      child: Column(
+        children: [
+          InkWell(
+              splashColor: Colors.blue,
+              highlightColor: Colors.red,
+              radius: 20.0,
+              onTap: onPressed,
+              child: Image.asset("assets/images/buy.png",
+                  width: 130, height: 130)),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            Flexible(
+                child: Text(
+              details.name,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                  fontSize: smallTextFontSize, color: blackColor),
+            )),
+            FavoriteButton(
+              iconSize: 24,
+              iconDisabledColor: lightBlueColor,
+              iconColor: lightBlueColor,
+              valueChanged: (isFavorite) {
+                onFavClicked();
+              },
+            )
+          ]),
+          Flexible(
+              child: Text(
+            details.location,
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+                fontSize: smallerTextFontSize, color: blackColor),
+          )),
+          const Padding(padding: EdgeInsets.only(top: 5))
+        ],
+      ));
 }
 
 Widget noInternet(VoidCallback startShoppingClicked) {

@@ -13,13 +13,13 @@ class ProductListUsecase {
   ProductListUsecase(this._storeRepo, this._addToCartRepo);
 
   getPopularProducts(
-      Function(Either<Failure, Result<List<Product>>> res) callback) {
-    _storeRepo.getPopularProducts().then((value) => callback(value));
+      Function(Either<Failure, Result<List<Product>>> res) callback) async {
+    await _storeRepo.getPopularProducts().then((value) => callback(value));
   }
 
   getProductsFromCategory(String category, int storeId,
-      Function(Either<Failure, Result<List<Product>>> res) callback) {
-    _storeRepo
+      Function(Either<Failure, Result<List<Product>>> res) callback) async {
+    await _storeRepo
         .getProductsFromCategory(category, storeId)
         .then((value) => callback(value));
   }

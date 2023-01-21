@@ -47,7 +47,7 @@ class FavStoresScreen extends StatelessWidget {
     return ListView.builder(
         itemCount: controller.details.length,
         itemBuilder: (context, position) {
-          var item = controller.details[position].id;
+          /* var item = controller.details[position].id;*/
           return Dismissible(
               key: UniqueKey(),
               onDismissed: (direction) {

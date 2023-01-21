@@ -39,7 +39,7 @@ class BuyerBottomNavScreen extends StatelessWidget {
           bottomNavItem(Icons.home, 'Home'),
           bottomNavItem(Icons.shopping_cart, 'Cart'),
           bottomNavItem(Icons.shopping_bag, 'History'),
-          bottomNavItem(Icons.favorite_border, 'Favorites'),
+          bottomNavItem(Icons.favorite_border_rounded, 'Favorites'),
         ],
         unselectedItemColor: Colors.grey,
         backgroundColor: whiteColor,

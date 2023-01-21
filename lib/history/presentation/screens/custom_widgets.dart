@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:simplibuy/core/constant.dart';
+import 'package:simplibuy/history/domain/entities/history_data.dart';
 
-Widget singleHistoryItem(BuildContext context) {
+Widget singleHistoryItem(BuildContext context, HistoryData data) {
   return Container(
+    margin: EdgeInsets.only(bottom: 10),
     padding: EdgeInsets.all(5),
     decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
         border: Border.all(
           color: Colors.grey,
           width: 3,
         )),
     width: MediaQuery.of(context).size.width,
-    height: 300,
     child: Row(
       children: [
         Container(
@@ -25,39 +26,56 @@ Widget singleHistoryItem(BuildContext context) {
             height: 50,
           ),
         ),
-        _historyDetails()
+        const Padding(padding: EdgeInsets.only(left: 10)),
+        _historyDetails(data)
       ],
     ),
   );
 }
 
-Widget _historyDetails() {
+Widget _historyDetails(HistoryData data) {
   return Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'Purchase ID: NAJN23343NJ',
-            style: TextStyle(
+            'Purchase ID: ${data.purchaseId}',
+            style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: blackColor,
                 fontSize: smallTextFontSize),
           ),
           Text(
-            'Just now',
-            style: TextStyle(color: blackColor, fontSize: smallerTextFontSize),
+            data.time,
+            style: const TextStyle(
+                color: blackColor, fontSize: smallerTextFontSize),
           ),
         ],
       ),
       Text(
-        'Status: Paid',
+        'Status: ${data.status}',
         style: TextStyle(color: blackColor, fontSize: smallTextFontSize),
       ),
       Text(
-        'Total Amount: 400',
+        'Total Amount: ${data.amount}',
         style: TextStyle(color: blackColor, fontSize: smallTextFontSize),
       ),
     ],
   );
+}
+
+Widget emptyHistory(BuildContext context) {
+  return Container(
+      padding: EdgeInsets.all(defaultPadding),
+      width: MediaQuery.of(context).size.width * 0.5,
+      height: MediaQuery.of(context).size.height * 0.5,
+      child: Column(children: [
+        Icon(Icons.history, size: 50),
+        Text('Your history is empty', style: TextStyle()),
+        Text('History about your transactions will appear here',
+            style: TextStyle())
+      ]));
 }

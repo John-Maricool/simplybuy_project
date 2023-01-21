@@ -66,14 +66,6 @@ class SignUpForm extends StatelessWidget {
         const Padding(
           padding: EdgeInsets.only(top: 15.0),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            clickableSmallButton(
-                onPressed: () {}, path: 'assets/images/google.png'),
-            clickableSmallButton(onPressed: () {}, path: 'assets/images/fb.png')
-          ],
-        ),
         ordinaryAndClickableText(
             text: "Already have an account?",
             clickableText: " Sign in",

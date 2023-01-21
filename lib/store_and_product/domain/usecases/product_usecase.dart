@@ -14,12 +14,12 @@ class ProductUsecase {
 
   ProductUsecase(this._repo, this._addToCartRepoImpl);
 
-  getProductInfo(
-      int productId, Function(Either<Failure, Result<Product>> res) callback) {
-    _repo.getProductInfo(productId).then((value) => callback.call(value));
+  getProductInfo(int productId,
+      Function(Either<Failure, Result<Product>> res) callback) async {
+    await _repo.getProductInfo(productId).then((value) => callback.call(value));
   }
 
-  addProductToCart(String storeName, int storeId, Product product) {
-    _addToCartRepoImpl.addItemToCart(storeName, storeId, product);
+  addProductToCart(String storeName, int storeId, Product product) async {
+    await _addToCartRepoImpl.addItemToCart(storeName, storeId, product);
   }
 }

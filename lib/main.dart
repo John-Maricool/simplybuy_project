@@ -84,6 +84,10 @@ class MyApp extends StatelessWidget {
         name: PRODUCT_SCREEN,
         page: () => ProductScreen(),
         binding: ProductBinding()),
-    GetPage(name: HISTORY_SCREEN, page: () => HistoryScreen())
+    GetPage(
+      name: HISTORY_SCREEN,
+      page: () => HistoryScreen(),
+      binding: BuyerHomeBottomNavScreensBindings(),
+    )
   ];
 }

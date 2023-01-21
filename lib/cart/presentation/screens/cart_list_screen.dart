@@ -80,7 +80,7 @@ class CartList extends StatelessWidget {
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(8))),
             elevation: 2,
-            color: const Color.fromRGBO(237, 232, 255, 1.0),
+            color: Colors.white,
             child: Container(
                 padding: EdgeInsets.all(10),
                 child: ListView(
@@ -108,7 +108,7 @@ class CartList extends StatelessWidget {
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(8))),
         elevation: 2,
-        color: const Color.fromRGBO(237, 232, 255, 1.0),
+        color: Colors.white,
         child: Column(
           children: [
             const Padding(padding: EdgeInsets.only(top: 10)),

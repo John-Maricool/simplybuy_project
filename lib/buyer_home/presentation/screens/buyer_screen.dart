@@ -21,68 +21,64 @@ class BuyerHomeScreen extends StatelessWidget {
     return Scaffold(
         drawer: navDrawer(),
         appBar: homeAppBar(text: "Good morning", onPressed: () {}),
-        body: Container(
-            padding: const EdgeInsets.all(10),
-            child: Column(children: [
-              _createSearchView(context),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Obx(() {
-                    return customButtonWithIcon(
-                        text: "Stores",
-                        iconData: Icons.storefront,
-                        onPressed: () {
-                          controller.getStores();
-                        },
-                        side: controller.isStore
-                            ? const BorderSide(color: blueColor, width: 2)
-                            : null);
-                  }),
-                  const Padding(padding: EdgeInsets.only(left: 6.0)),
-                  Obx(() {
-                    return customButtonWithIcon(
-                        text: "Malls",
-                        iconData: Icons.local_mall,
-                        onPressed: () {
-                          controller.getMalls();
-                        },
-                        side: controller.isStore
-                            ? null
-                            : const BorderSide(color: blueColor, width: 2));
-                  })
-                ],
-              ),
-              Align(
-                  alignment: Alignment.topRight,
-                  child: Obx(() {
-                    return RichText(
-                        text: TextSpan(
-                            text: controller.state is ErrorState
-                                ? ""
-                                : "View all",
-                            style: const TextStyle(
-                                color: blackColor,
-                                fontSize: smallerTextFontSize),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                controller.state is ErrorState
-                                    ? VoidCallback
-                                    : Get.toNamed(STORES_LIST_ROUTE);
-                                Get.toNamed(STORES_LIST_ROUTE);
-                              }));
-                  })),
-              Expanded(
-                child: _itemsList(context),
-              )
-            ])));
+        body: Column(children: [
+          _createSearchView(context),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Obx(() {
+                return customButtonWithIcon(
+                    text: "Stores",
+                    iconData: Icons.storefront,
+                    onPressed: () {
+                      controller.getStores();
+                    },
+                    side: controller.isStore
+                        ? const BorderSide(color: blueColor, width: 2)
+                        : null);
+              }),
+              const Padding(padding: EdgeInsets.only(left: 6.0)),
+              Obx(() {
+                return customButtonWithIcon(
+                    text: "Malls",
+                    iconData: Icons.local_mall,
+                    onPressed: () {
+                      controller.getMalls();
+                    },
+                    side: controller.isStore
+                        ? null
+                        : const BorderSide(color: blueColor, width: 2));
+              })
+            ],
+          ),
+          Container(
+              alignment: Alignment.topRight,
+              padding: EdgeInsets.only(right: 12, bottom: 12),
+              child: Obx(() {
+                return RichText(
+                    text: TextSpan(
+                        text: controller.state is ErrorState ? "" : "View all",
+                        style: const TextStyle(
+                            color: blackColor, fontSize: smallerTextFontSize),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            controller.state is ErrorState
+                                ? VoidCallback
+                                : Get.toNamed(STORES_LIST_ROUTE);
+                            Get.toNamed(STORES_LIST_ROUTE);
+                          }));
+              })),
+          Expanded(
+            child: _itemsList(context),
+          )
+        ]));
   }
 
   Widget navDrawer() {
     return Drawer(
       child: Container(
         padding: const EdgeInsets.only(bottom: defaultPadding),
-        color: lightBlueColor,
+        color: whiteColor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -90,7 +86,7 @@ class BuyerHomeScreen extends StatelessWidget {
                 child: ListView(padding: EdgeInsets.zero, children: [
               DrawerHeader(
                 decoration: const BoxDecoration(
-                  color: whiteColor,
+                  color: lightBlueColor,
                 ),
                 child: _drawerUserImageAndName(
                     url:
@@ -125,7 +121,7 @@ class BuyerHomeScreen extends StatelessWidget {
     return SingleChildScrollView(
         child: Container(
             padding: const EdgeInsets.all(defaultPadding),
-            decoration: const BoxDecoration(color: whiteColor),
+            decoration: const BoxDecoration(color: lightBlueColor),
             height: 260,
             width: 140,
             child: Align(
@@ -145,7 +141,7 @@ class BuyerHomeScreen extends StatelessWidget {
                 Text(
                   username,
                   style: const TextStyle(
-                      color: blackColor, fontSize: smallTextFontSize),
+                      color: whiteColor, fontSize: smallTextFontSize),
                   textAlign: TextAlign.center,
                 )
               ]),
@@ -183,7 +179,7 @@ class BuyerHomeScreen extends StatelessWidget {
               text: TextSpan(
                   text: "LogOut",
                   style: const TextStyle(
-                      color: blueColor,
+                      color: blackColor,
                       fontSize: smallTextFontSize,
                       fontWeight: FontWeight.bold),
                   recognizer: TapGestureRecognizer()..onTap = () {}))
@@ -200,18 +196,24 @@ class BuyerHomeScreen extends StatelessWidget {
           controller.reload();
         });
       }
+
       return GridView.count(
           crossAxisCount: 2,
           physics: const ScrollPhysics(),
           crossAxisSpacing: 4.0,
           mainAxisSpacing: 6.0,
+          shrinkWrap: true,
           children: List.generate(
               controller.details.length,
               (index) => Center(
                   child: storesGridSingleItem(
                       details: controller.details[index],
                       onPressed: () => Get.toNamed(SINGLE_STORE_ROUTE,
-                          arguments: controller.details[index].id)))));
+                          arguments: controller.details[index].id),
+                      onFavClicked: () {
+                        controller.addToFav(index);
+                        ScaffoldMessenger.of(context).showSnackBar(snackAdded);
+                      }))));
     });
   }
 
@@ -224,7 +226,7 @@ class BuyerHomeScreen extends StatelessWidget {
 
   Widget search(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [searchInputBlue(context), filterOption(() {})],
     );
   }

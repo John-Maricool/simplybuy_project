@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:simplibuy/authentication/presentation/screens/login/login_screen.dart';
-import 'package:simplibuy/authentication/presentation/screens/signup/signup_screen.dart';
 import 'package:simplibuy/core/constants/route_constants.dart';
 import 'package:simplibuy/core/reusable_widgets/reusable_widgets.dart';
 import 'package:simplibuy/core/constant.dart';
