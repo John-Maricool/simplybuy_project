@@ -8,4 +8,5 @@ const CART_LIST_SCREEN = '/cart_list';
 const PRODUCTS_LIST_SCREEN = "/product_via_Category";
 const PROFILE_SCREEN = '/profile';
 const PRODUCT_SCREEN = '/product';
+const TO_BUY_SCREEN = '/to_buy';
 const HISTORY_SCREEN = '/history';

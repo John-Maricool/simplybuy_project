@@ -1,6 +1,7 @@
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
 import 'package:simplibuy/buyer_home/data/models/fav_stores_model.dart';
 import 'package:simplibuy/core/constant.dart';
 import 'package:simplibuy/buyer_home/domain/entities/strore_details.dart';
@@ -309,4 +310,27 @@ Widget noInternet(VoidCallback startShoppingClicked) {
           pressed: startShoppingClicked, text: 'Try Again', size: Size(120, 50))
     ],
   );
+}
+
+Widget toBuyListSingleItem(String text, RxBool isBought, VoidCallback save) {
+  return GestureDetector(
+      child: SizedBox(
+          height: 30,
+          child: Row(
+            children: [
+              Checkbox(
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  value: isBought.value,
+                  onChanged: (value) =>
+                      {isBought.value = !isBought.value, save()}),
+              Text(
+                text,
+                style: TextStyle(
+                  decoration: isBought.value
+                      ? TextDecoration.lineThrough
+                      : TextDecoration.none,
+                ),
+              ),
+            ],
+          )));
 }

@@ -65,6 +65,8 @@ class _$AppDatabase extends AppDatabase {
 
   FavStoresDao? _favDaoInstance;
 
+  ToBuyModelDao? _toBuyDaoInstance;
+
   Future<sqflite.Database> open(String path, List<Migration> migrations,
       [Callback? callback]) async {
     final databaseOptions = sqflite.OpenDatabaseOptions(
@@ -87,6 +89,8 @@ class _$AppDatabase extends AppDatabase {
             'CREATE TABLE IF NOT EXISTS `ItemCartDetails` (`id` INTEGER NOT NULL, `storeName` TEXT NOT NULL, `storeId` INTEGER NOT NULL, `itemName` TEXT NOT NULL, `itemPieces` INTEGER NOT NULL, `itemPrice` REAL NOT NULL, PRIMARY KEY (`id`))');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `FavStoresModel` (`id` INTEGER NOT NULL, `storeName` TEXT NOT NULL, `location` TEXT NOT NULL, `storeAddress` TEXT NOT NULL, `imageLogo` TEXT NOT NULL, `rating` INTEGER NOT NULL, PRIMARY KEY (`id`))');
+        await database.execute(
+            'CREATE TABLE IF NOT EXISTS `ToBuyModel` (`id` INTEGER NOT NULL, `item` TEXT NOT NULL, `isBought` INTEGER NOT NULL, PRIMARY KEY (`id`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -102,6 +106,11 @@ class _$AppDatabase extends AppDatabase {
   @override
   FavStoresDao get favDao {
     return _favDaoInstance ??= _$FavStoresDao(database, changeListener);
+  }
+
+  @override
+  ToBuyModelDao get toBuyDao {
+    return _toBuyDaoInstance ??= _$ToBuyModelDao(database, changeListener);
   }
 }
 
@@ -219,5 +228,60 @@ class _$FavStoresDao extends FavStoresDao {
   Future<void> addToFavorite(FavStoresModel item) async {
     await _favStoresModelInsertionAdapter.insert(
         item, OnConflictStrategy.replace);
+  }
+}
+
+class _$ToBuyModelDao extends ToBuyModelDao {
+  _$ToBuyModelDao(this.database, this.changeListener)
+      : _queryAdapter = QueryAdapter(database),
+        _toBuyModelInsertionAdapter = InsertionAdapter(
+            database,
+            'ToBuyModel',
+            (ToBuyModel item) => <String, Object?>{
+                  'id': item.id,
+                  'item': item.item,
+                  'isBought': item.isBought ? 1 : 0
+                });
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  final InsertionAdapter<ToBuyModel> _toBuyModelInsertionAdapter;
+
+  @override
+  Future<List<ToBuyModel>> getAllItemsToBuy() async {
+    return _queryAdapter.queryList('SELECT * FROM ToBuyModel',
+        mapper: (Map<String, Object?> row) => ToBuyModel(
+            id: row['id'] as int,
+            item: row['item'] as String,
+            isBought: (row['isBought'] as int) != 0));
+  }
+
+  @override
+  Future<void> deleteItemToBuy(int id) async {
+    await _queryAdapter
+        .queryNoReturn('DELETE FROM ToBuyModel WHERE id = ?1', arguments: [id]);
+  }
+
+  @override
+  Future<void> updateNewItemToBuy(int id, String newValue) async {
+    await _queryAdapter.queryNoReturn(
+        'UPDATE ToBuyModel SET item = ?2 WHERE id = ?1',
+        arguments: [id, newValue]);
+  }
+
+  @override
+  Future<void> changeIsBought(int id, bool isBought) async {
+    await _queryAdapter.queryNoReturn(
+        'UPDATE ToBuyModel SET isBought = ?2 WHERE id = ?1',
+        arguments: [id, isBought ? 1 : 0]);
+  }
+
+  @override
+  Future<void> insertNewItemsToBuy(ToBuyModel model) async {
+    await _toBuyModelInsertionAdapter.insert(model, OnConflictStrategy.replace);
   }
 }

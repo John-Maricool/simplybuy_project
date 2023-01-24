@@ -18,11 +18,15 @@ class BuyerHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    controller.getToBuyList();
     return Scaffold(
         drawer: navDrawer(),
         appBar: homeAppBar(text: "Good morning", onPressed: () {}),
         body: Column(children: [
           _createSearchView(context),
+          Container(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: _toBuyList(context)),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -53,7 +57,7 @@ class BuyerHomeScreen extends StatelessWidget {
           ),
           Container(
               alignment: Alignment.topRight,
-              padding: EdgeInsets.only(right: 12, bottom: 12),
+              padding: const EdgeInsets.only(right: 12, bottom: 12),
               child: Obx(() {
                 return RichText(
                     text: TextSpan(
@@ -162,6 +166,84 @@ class BuyerHomeScreen extends StatelessWidget {
             fontWeight: FontWeight.bold),
       ),
       onTap: onClick,
+    );
+  }
+
+  Widget _toBuyList(BuildContext context) {
+    return Obx(() {
+      if (controller.stateToBuy is LoadingState) {
+        return const Text("Loading...");
+      }
+      if (controller.stateToBuy is FinishedState) {
+        return toBuyListContainer(context);
+      }
+      return toBuyListEmpty(context);
+    });
+  }
+
+  Widget toBuyListContainer(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(top: 10, bottom: 10),
+      width: MediaQuery.of(context).size.width,
+      height: 120,
+      decoration: const BoxDecoration(
+          color: lightBlueColor,
+          borderRadius: BorderRadius.all(Radius.circular(10))),
+      child: InkWell(
+          child: Column(
+            children: [
+              const Text(
+                "Create a To-buy list",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: whiteColor,
+                    fontSize: smallTextFontSize),
+                textAlign: TextAlign.center,
+              ),
+              Expanded(
+                  child: ListView.separated(
+                separatorBuilder: (context, index) {
+                  return Container(height: 0.5);
+                },
+                itemCount: controller.toBuyModel.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Obx(() {
+                    return toBuyListSingleItem(
+                        controller.toBuyModel[index].item,
+                        controller.isBoughtRx[index], () {
+                      controller.saveIsBought(index);
+                    });
+                  });
+                },
+              ))
+            ],
+          ),
+          onTap: () => Get.toNamed(TO_BUY_SCREEN)),
+    );
+  }
+
+  Widget toBuyListEmpty(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(top: 10, bottom: 10),
+      width: MediaQuery.of(context).size.width,
+      height: 120,
+      decoration: const BoxDecoration(
+          color: lightBlueColor,
+          borderRadius: BorderRadius.all(Radius.circular(10))),
+      child: InkWell(
+          child: Column(
+            children: const [
+              Text(
+                "Create a To-buy list",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: whiteColor,
+                    fontSize: smallTextFontSize),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+          onTap: () => Get.toNamed(TO_BUY_SCREEN)),
     );
   }
 

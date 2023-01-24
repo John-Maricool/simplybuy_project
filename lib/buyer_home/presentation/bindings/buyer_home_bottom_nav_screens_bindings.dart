@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:simplibuy/buyer_home/data/repositories/favorite_stores_repo_impl.dart';
 import 'package:simplibuy/buyer_home/domain/repositories/favorite_stores_repository.dart';
 import 'package:simplibuy/buyer_home/domain/repositories/stores_and_malls_list_repository.dart';
 import 'package:simplibuy/buyer_home/domain/usecases/stores_and_malls_fav_usecase.dart';
@@ -8,17 +7,19 @@ import 'package:simplibuy/buyer_home/presentation/controller/fav_screen_controll
 import 'package:simplibuy/buyer_home/presentation/controller/stores_and_malls_controller.dart';
 import 'package:simplibuy/core/local_db/cart_dao.dart';
 import 'package:simplibuy/core/local_db/fav_stores_dao.dart';
+import 'package:simplibuy/core/local_db/to_buy_dao.dart';
 import 'package:simplibuy/core/network/network_info.dart';
 import 'package:simplibuy/history/data/repositories/history_data_impl.dart';
 import 'package:simplibuy/history/domain/repositories/history_data_repo.dart';
 import 'package:simplibuy/history/domain/usecases/history_data_usecase.dart';
 import 'package:simplibuy/history/presentation/controller/history_data_controller.dart';
+import 'package:simplibuy/to_buy_list/domain/repository/to_buy_repository.dart';
+import 'package:simplibuy/to_buy_list/domain/usecases/to_buy_usecase.dart';
 
 import '../../../cart/data/repository/cart_list_repository_impl.dart';
 import '../../../cart/domain/repository/cart_list_repository.dart';
 import '../../../cart/domain/usecases/cart_list_usecase.dart';
 import '../../../cart/presentation/controllers/cart_list_controller.dart';
-import '../../data/repositories/stores_and_malls_repository_impl.dart';
 import '../controller/buyer_home_navigation_controller.dart';
 
 class BuyerHomeBottomNavScreensBindings implements Bindings {
@@ -34,6 +35,11 @@ class BuyerHomeBottomNavScreensBindings implements Bindings {
   }
 
   _getStoresAndMallsController(NetworkInfo info) {
+    Get.lazyPut<ToBuyRepository>(
+        () => ToBuyRepositoryImpl(dao: Get.find<ToBuyModelDao>()));
+    Get.lazyPut<ToBuyUsecase>(
+        () => ToBuyUsecaseImpl(repo: Get.find<ToBuyRepository>()));
+
     Get.lazyPut<FavStoresAndMallsRepository>(
         () => FavStoresRepoImpl(dao: Get.find<FavStoresDao>()));
     Get.lazyPut<StoresAndMallsFavUsecase>(() =>
@@ -44,7 +50,8 @@ class BuyerHomeBottomNavScreensBindings implements Bindings {
         repository: Get.find<StoresAndMallsRepository>()));
     Get.lazyPut<StoresAndMallsController>(() => StoresAndMallsController(
         usecase: Get.find<StoresAndMallsUsecase>(),
-        usecaseFav: Get.find<StoresAndMallsFavUsecase>()));
+        usecaseFav: Get.find<StoresAndMallsFavUsecase>(),
+        usecaseToBuy: Get.find<ToBuyUsecase>()));
   }
 
   _getCartListControllers() {

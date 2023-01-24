@@ -5,6 +5,7 @@ import 'package:simplibuy/authentication/presentation/screens/login/login_screen
 import 'package:simplibuy/authentication/presentation/screens/signup/signup_screen.dart';
 import 'package:simplibuy/authentication/presentation/screens/user_type_intro/user_type.dart';
 import 'package:simplibuy/buyer_home/presentation/bindings/buyer_home_bottom_nav_screens_bindings.dart';
+import 'package:simplibuy/buyer_home/presentation/screens/buyer_screen.dart';
 import 'package:simplibuy/buyer_home/presentation/screens/stores_and_malls_screen.dart';
 import 'package:simplibuy/cart/presentation/screens/cart_list_screen.dart';
 import 'package:simplibuy/core/constant.dart';
@@ -22,6 +23,8 @@ import 'package:simplibuy/store_and_product/presentation/binding/store_info_bind
 import 'package:simplibuy/store_and_product/presentation/screens/product_screen.dart';
 import 'package:simplibuy/store_and_product/presentation/screens/product_via_category.dart';
 import 'package:simplibuy/store_and_product/presentation/screens/store_info_screen.dart';
+import 'package:simplibuy/to_buy_list/presentation/binding/to_buy_binding.dart';
+import 'package:simplibuy/to_buy_list/presentation/screens/to_buy_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -88,6 +91,11 @@ class MyApp extends StatelessWidget {
       name: HISTORY_SCREEN,
       page: () => HistoryScreen(),
       binding: BuyerHomeBottomNavScreensBindings(),
+    ),
+    GetPage(
+      name: TO_BUY_SCREEN,
+      page: () => ToBuyScreen(),
+      binding: ToBuyBinding(),
     )
   ];
 }

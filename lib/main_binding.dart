@@ -12,5 +12,6 @@ class MainBinding implements Bindings {
     AppDatabase db = await result;
     Get.put(db.cartDao);
     Get.put(db.favDao);
+    Get.put(db.toBuyDao);
   }
 }
