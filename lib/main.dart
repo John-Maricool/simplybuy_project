@@ -14,9 +14,13 @@ import 'package:simplibuy/history/presentation/screens/history_screen.dart';
 import 'package:simplibuy/main_binding.dart';
 import 'package:get/get.dart';
 import 'package:simplibuy/buyer_home/presentation/screens/buyer_home_drawers.dart';
+import 'package:simplibuy/notification/presentation/binding/notification_binding.dart';
 import 'package:simplibuy/other_screens/splash_screen.dart';
 import 'package:simplibuy/profile/presentation/binding/profile_screen_binding.dart';
 import 'package:simplibuy/profile/presentation/screens/profile_screen.dart';
+import 'package:simplibuy/reserve/presentation/bindings/reserve_binding.dart';
+import 'package:simplibuy/reserve/presentation/screens/reserve_screen.dart';
+import 'package:simplibuy/reserve/presentation/screens/reserve_screen_completion.dart';
 import 'package:simplibuy/store_and_product/presentation/binding/product_binding.dart';
 import 'package:simplibuy/store_and_product/presentation/binding/products_list_binding.dart';
 import 'package:simplibuy/store_and_product/presentation/binding/store_info_binding.dart';
@@ -25,6 +29,8 @@ import 'package:simplibuy/store_and_product/presentation/screens/product_via_cat
 import 'package:simplibuy/store_and_product/presentation/screens/store_info_screen.dart';
 import 'package:simplibuy/to_buy_list/presentation/binding/to_buy_binding.dart';
 import 'package:simplibuy/to_buy_list/presentation/screens/to_buy_screen.dart';
+
+import 'notification/presentation/screens/notification.dart';
 
 void main() {
   runApp(MyApp());
@@ -96,6 +102,18 @@ class MyApp extends StatelessWidget {
       name: TO_BUY_SCREEN,
       page: () => ToBuyScreen(),
       binding: ToBuyBinding(),
-    )
+    ),
+    GetPage(
+        name: RESERVE_SCREEN,
+        page: () => ReserveScreen(),
+        binding: ReserveBinding()),
+    GetPage(
+        name: RESERVE_SCREEN_COMPL,
+        page: () => ReserveScreenCompletion(),
+        binding: ReserveBinding()),
+    GetPage(
+        name: NOTIFICATION_SCREEN,
+        page: () => NotificationScreen(),
+        binding: NotificationBinding())
   ];
 }

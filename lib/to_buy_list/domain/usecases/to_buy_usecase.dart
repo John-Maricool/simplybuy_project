@@ -3,11 +3,11 @@ import 'package:simplibuy/to_buy_list/domain/repository/to_buy_repository.dart';
 
 import '../../../core/failure/failure.dart';
 import '../../../core/result/result.dart';
-import '../../data/model/to_buy_model.dart';
+import '../../data/model/item_to_buy.dart';
 
 abstract class ToBuyUsecase {
-  addItemToBuy(ToBuyModel toBuyModel);
-  getAllItemsToBuy(Function(Either<Failure, Result<List<ToBuyModel>>> b) res);
+  addItemToBuy(ItemToBuy toBuyModel);
+  getAllItemsToBuy(Function(Either<Failure, Result<List<ItemToBuy>>> b) res);
   removeItemToBuy(int id);
   updateItem(String item, int id);
   changeIsBought(int id, bool isBought);
@@ -18,12 +18,12 @@ class ToBuyUsecaseImpl implements ToBuyUsecase {
   ToBuyUsecaseImpl({required this.repo});
 
   @override
-  addItemToBuy(ToBuyModel toBuyModel) {
+  addItemToBuy(ItemToBuy toBuyModel) {
     repo.addItemToBuy(toBuyModel);
   }
 
   @override
-  getAllItemsToBuy(Function(Either<Failure, Result<List<ToBuyModel>>> b) res) {
+  getAllItemsToBuy(Function(Either<Failure, Result<List<ItemToBuy>>> b) res) {
     return repo.getAllItemsToBuy().then((value) => res.call(value));
   }
 

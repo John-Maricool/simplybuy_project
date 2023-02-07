@@ -1,13 +1,13 @@
 import 'package:floor/floor.dart';
-import 'package:simplibuy/to_buy_list/data/model/to_buy_model.dart';
+import 'package:simplibuy/to_buy_list/data/model/item_to_buy.dart';
 
 @dao
 abstract class ToBuyModelDao {
   @Query('SELECT * FROM ToBuyModel')
-  Future<List<ToBuyModel>> getAllItemsToBuy();
+  Future<List<ItemToBuy>> getAllItemsToBuy();
 
   @Insert(onConflict: OnConflictStrategy.replace)
-  Future<void> insertNewItemsToBuy(ToBuyModel model);
+  Future<void> insertNewItemsToBuy(ItemToBuy model);
 
   @Query('DELETE FROM ToBuyModel WHERE id = :id')
   Future<void> deleteItemToBuy(int id);

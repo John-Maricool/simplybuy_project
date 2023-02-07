@@ -4,8 +4,8 @@ import 'package:simplibuy/history/domain/entities/history_data.dart';
 
 Widget singleHistoryItem(BuildContext context, HistoryData data) {
   return Container(
-    margin: EdgeInsets.only(bottom: 10),
-    padding: EdgeInsets.all(5),
+    margin: const EdgeInsets.only(bottom: 10),
+    padding: const EdgeInsets.all(5),
     decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(10)),
         border: Border.all(
@@ -16,7 +16,7 @@ Widget singleHistoryItem(BuildContext context, HistoryData data) {
     child: Row(
       children: [
         Container(
-          padding: EdgeInsets.all(5),
+          padding: const EdgeInsets.all(5),
           decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(10)),
               color: lightBlueColor),
@@ -57,11 +57,11 @@ Widget _historyDetails(HistoryData data) {
       ),
       Text(
         'Status: ${data.status}',
-        style: TextStyle(color: blackColor, fontSize: smallTextFontSize),
+        style: const TextStyle(color: blackColor, fontSize: smallTextFontSize),
       ),
       Text(
         'Total Amount: ${data.amount}',
-        style: TextStyle(color: blackColor, fontSize: smallTextFontSize),
+        style: const TextStyle(color: blackColor, fontSize: smallTextFontSize),
       ),
     ],
   );
@@ -69,13 +69,13 @@ Widget _historyDetails(HistoryData data) {
 
 Widget emptyHistory(BuildContext context) {
   return Container(
-      padding: EdgeInsets.all(defaultPadding),
+      padding: const EdgeInsets.all(defaultPadding),
       width: MediaQuery.of(context).size.width * 0.5,
       height: MediaQuery.of(context).size.height * 0.5,
       child: Column(children: [
-        Icon(Icons.history, size: 50),
-        Text('Your history is empty', style: TextStyle()),
-        Text('History about your transactions will appear here',
+        const Icon(Icons.history, size: 50),
+        const Text('Your history is empty', style: TextStyle()),
+        const Text('History about your transactions will appear here',
             style: TextStyle())
       ]));
 }

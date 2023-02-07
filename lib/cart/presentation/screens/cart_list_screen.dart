@@ -7,6 +7,7 @@ import 'package:simplibuy/core/error_types/error_types.dart';
 import 'package:simplibuy/core/reusable_widgets/reusable_widgets.dart';
 import 'package:simplibuy/core/state/state.dart';
 import '../../../buyer_home/presentation/controller/buyer_home_navigation_controller.dart';
+import '../../../core/constants/route_constants.dart';
 import '../../../core/local_db/cart_dao.dart';
 
 // ignore: must_be_immutable
@@ -48,7 +49,11 @@ class CartList extends StatelessWidget {
                   Obx(() {
                     return controller.cartItems.isEmpty
                         ? Container()
-                        : defaultButtons(pressed: () {}, text: 'Reserve Item');
+                        : defaultButtons(
+                            pressed: () {
+                              Get.toNamed(RESERVE_SCREEN);
+                            },
+                            text: 'Reserve Item');
                   }),
                 ]);
               }

@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:simplibuy/buyer_home/domain/entities/strore_details.dart';
 import 'package:simplibuy/buyer_home/domain/usecases/stores_and_malls_usecase.dart';
-import 'package:simplibuy/to_buy_list/data/model/to_buy_model.dart';
+import 'package:simplibuy/to_buy_list/data/model/item_to_buy.dart';
 import 'package:simplibuy/to_buy_list/domain/usecases/to_buy_usecase.dart';
 import '../../../core/state/state.dart';
 import '../../domain/usecases/stores_and_malls_fav_usecase.dart';
@@ -27,12 +27,12 @@ class StoresAndMallsController extends GetxController {
   bool get isStore => _isStore.value;
 
   final RxList<StoreDetails> _details = (List<StoreDetails>.of([])).obs;
-  final RxList<ToBuyModel> _toBuyModel = (List<ToBuyModel>.of([])).obs;
+  final RxList<ItemToBuy> _toBuyModel = (List<ItemToBuy>.of([])).obs;
 
   // ignore: invalid_use_of_protected_member
   List<StoreDetails> get details => _details.value;
   // ignore: invalid_use_of_protected_member
-  List<ToBuyModel> get toBuyModel => _toBuyModel.value;
+  List<ItemToBuy> get toBuyModel => _toBuyModel.value;
 
   final _state = const State().obs;
   State get state => _state.value;

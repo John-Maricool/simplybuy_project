@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:simplibuy/to_buy_list/data/model/to_buy_model.dart';
+import 'package:simplibuy/to_buy_list/data/model/item_to_buy.dart';
 import 'package:simplibuy/to_buy_list/domain/usecases/to_buy_usecase.dart';
 import '../../../core/state/state.dart';
 
@@ -13,9 +13,9 @@ class ToBuyController extends GetxController {
   final _state = const State().obs;
   State get state => _state.value;
 
-  final RxList<ToBuyModel> _details = (List<ToBuyModel>.of([])).obs;
+  final RxList<ItemToBuy> _details = (List<ItemToBuy>.of([])).obs;
 
-  RxList<ToBuyModel> get details => _details;
+  RxList<ItemToBuy> get details => _details;
 
   final ToBuyUsecase _usecase;
   ToBuyController(this._usecase);
@@ -33,7 +33,7 @@ class ToBuyController extends GetxController {
   }
 
   void addToList() async {
-    ToBuyModel toBuyModel = ToBuyModel(
+    ItemToBuy toBuyModel = ItemToBuy(
         id: DateTime.now().millisecondsSinceEpoch,
         item: "...",
         isBought: false);

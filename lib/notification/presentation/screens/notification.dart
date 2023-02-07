@@ -1,41 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simplibuy/core/constant.dart';
-import 'package:simplibuy/core/reusable_widgets/reusable_widgets.dart';
-import 'package:simplibuy/history/presentation/screens/custom_widgets.dart';
-import '../../../buyer_home/presentation/controller/buyer_home_navigation_controller.dart';
 import '../../../core/error_types/error_types.dart';
 import '../../../core/state/state.dart';
-import '../controller/history_data_controller.dart';
+import 'package:simplibuy/core/reusable_widgets/reusable_widgets.dart';
+import 'package:simplibuy/notification/presentation/controller/notification_controller.dart';
+import 'package:simplibuy/notification/presentation/screens/custom_widgets.dart';
 
-class HistoryScreen extends StatelessWidget {
-  HistoryScreen({Key? key}) : super(key: key);
+class NotificationScreen extends StatelessWidget {
+  NotificationScreen({Key? key}) : super(key: key);
 
-  final HistoryDataController _controller = Get.find<HistoryDataController>();
-
-  BuyerHomeNavigationController navController =
-      Get.find<BuyerHomeNavigationController>();
+  final NotificationController _controller = Get.find<NotificationController>();
 
   @override
   Widget build(BuildContext context) {
-    _controller.start();
     return Scaffold(
       appBar: customAppBar(
-          text: 'History', onPressed: () => navController.changePage(0)),
+          text: "Notifications",
+          onPressed: () {
+            Get.back();
+          }),
       body: Container(
-          padding: const EdgeInsets.all(defaultPadding),
+          padding: const EdgeInsets.all(5),
           child: Obx(() {
             if (_controller.state == ErrorState(errorType: EmptyListError())) {
-              return emptyHistory(context);
+              return emptyNotification(context);
             }
             if (_controller.state == ErrorState(errorType: InternetError())) {
               return noInternetConnection(context);
             }
             if (_controller.state is FinishedState) {
-              return ListView.builder(
+              return ListView.separated(
+                  separatorBuilder: ((context, index) {
+                    return Container(padding: EdgeInsets.only(top: 4));
+                  }),
                   itemCount: _controller.data.length,
                   itemBuilder: (context, index) {
-                    return singleHistoryItem(context, _controller.data[index]);
+                    return NotificationSingleItem(_controller.data[index]);
                   });
             }
             if (_controller.state == ErrorState(errorType: ServerError())) {
@@ -48,5 +49,9 @@ class HistoryScreen extends StatelessWidget {
             return defaultLoading(context);
           })),
     );
+  }
+
+  Widget emptyNotification(BuildContext context) {
+    return Container();
   }
 }

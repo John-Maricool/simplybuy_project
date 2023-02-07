@@ -9,4 +9,7 @@ const PRODUCTS_LIST_SCREEN = "/product_via_Category";
 const PROFILE_SCREEN = '/profile';
 const PRODUCT_SCREEN = '/product';
 const TO_BUY_SCREEN = '/to_buy';
+const RESERVE_SCREEN = '/reserve';
+const RESERVE_SCREEN_COMPL = '/reserve_compl';
 const HISTORY_SCREEN = '/history';
+const NOTIFICATION_SCREEN = '/notification';

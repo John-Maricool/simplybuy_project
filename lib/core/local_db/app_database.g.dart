@@ -237,7 +237,7 @@ class _$ToBuyModelDao extends ToBuyModelDao {
         _toBuyModelInsertionAdapter = InsertionAdapter(
             database,
             'ToBuyModel',
-            (ToBuyModel item) => <String, Object?>{
+            (ItemToBuy item) => <String, Object?>{
                   'id': item.id,
                   'item': item.item,
                   'isBought': item.isBought ? 1 : 0
@@ -249,12 +249,12 @@ class _$ToBuyModelDao extends ToBuyModelDao {
 
   final QueryAdapter _queryAdapter;
 
-  final InsertionAdapter<ToBuyModel> _toBuyModelInsertionAdapter;
+  final InsertionAdapter<ItemToBuy> _toBuyModelInsertionAdapter;
 
   @override
-  Future<List<ToBuyModel>> getAllItemsToBuy() async {
+  Future<List<ItemToBuy>> getAllItemsToBuy() async {
     return _queryAdapter.queryList('SELECT * FROM ToBuyModel',
-        mapper: (Map<String, Object?> row) => ToBuyModel(
+        mapper: (Map<String, Object?> row) => ItemToBuy(
             id: row['id'] as int,
             item: row['item'] as String,
             isBought: (row['isBought'] as int) != 0));
@@ -281,7 +281,7 @@ class _$ToBuyModelDao extends ToBuyModelDao {
   }
 
   @override
-  Future<void> insertNewItemsToBuy(ToBuyModel model) async {
+  Future<void> insertNewItemsToBuy(ItemToBuy model) async {
     await _toBuyModelInsertionAdapter.insert(model, OnConflictStrategy.replace);
   }
 }

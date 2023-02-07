@@ -9,7 +9,6 @@ import 'package:simplibuy/core/local_db/cart_dao.dart';
 import 'package:simplibuy/core/local_db/fav_stores_dao.dart';
 import 'package:simplibuy/core/local_db/to_buy_dao.dart';
 import 'package:simplibuy/core/network/network_info.dart';
-import 'package:simplibuy/history/data/repositories/history_data_impl.dart';
 import 'package:simplibuy/history/domain/repositories/history_data_repo.dart';
 import 'package:simplibuy/history/domain/usecases/history_data_usecase.dart';
 import 'package:simplibuy/history/presentation/controller/history_data_controller.dart';

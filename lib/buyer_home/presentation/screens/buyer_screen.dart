@@ -21,7 +21,11 @@ class BuyerHomeScreen extends StatelessWidget {
     controller.getToBuyList();
     return Scaffold(
         drawer: navDrawer(),
-        appBar: homeAppBar(text: "Good morning", onPressed: () {}),
+        appBar: homeAppBar(
+            text: "Good morning",
+            onPressed: () {
+              Get.toNamed(NOTIFICATION_SCREEN);
+            }),
         body: Column(children: [
           _createSearchView(context),
           Container(

@@ -5,6 +5,7 @@ import 'package:simplibuy/store_and_product/presentation/controllers/product_con
 import 'package:simplibuy/store_and_product/presentation/screens/custom_widgets.dart';
 
 import '../../../core/constant.dart';
+import '../../../core/constants/route_constants.dart';
 import '../../../core/error_types/error_types.dart';
 import '../../../core/state/state.dart';
 import '../../domain/entities/product.dart';
@@ -60,7 +61,9 @@ class ProductScreen extends StatelessWidget {
               const Padding(padding: EdgeInsets.only(top: 20)),
               Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
                 defaultButtons(
-                    pressed: () {},
+                    pressed: () {
+                      Get.toNamed(RESERVE_SCREEN);
+                    },
                     text: 'Reserve',
                     size: mediumWidthButtonSize),
                 iconAsBtn(() {

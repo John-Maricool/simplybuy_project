@@ -1,14 +1,14 @@
 import 'package:either_dart/either.dart';
 import 'package:simplibuy/core/local_db/to_buy_dao.dart';
-import 'package:simplibuy/to_buy_list/data/model/to_buy_model.dart';
+import 'package:simplibuy/to_buy_list/data/model/item_to_buy.dart';
 
 import '../../../core/error_types/error_types.dart';
 import '../../../core/failure/failure.dart';
 import '../../../core/result/result.dart';
 
 abstract class ToBuyRepository {
-  addItemToBuy(ToBuyModel toBuyModel);
-  Future<Either<Failure, Result<List<ToBuyModel>>>> getAllItemsToBuy();
+  addItemToBuy(ItemToBuy toBuyModel);
+  Future<Either<Failure, Result<List<ItemToBuy>>>> getAllItemsToBuy();
   removeItemToBuy(int id);
   updateItem(String item, int id);
   changeIsBought(int id, bool isBought);
@@ -19,17 +19,16 @@ class ToBuyRepositoryImpl implements ToBuyRepository {
   ToBuyRepositoryImpl({required this.dao});
 
   @override
-  addItemToBuy(ToBuyModel toBuyModel) async {
+  addItemToBuy(ItemToBuy toBuyModel) async {
     await dao.insertNewItemsToBuy(toBuyModel);
   }
 
   @override
-  Future<Either<Failure, Result<List<ToBuyModel>>>> getAllItemsToBuy() async {
+  Future<Either<Failure, Result<List<ItemToBuy>>>> getAllItemsToBuy() async {
     final res = await dao.getAllItemsToBuy();
     if (res.isEmpty) {
       return Left(Failure(error: EmptyListError()));
     } else {
-      print(res[0].id.toString());
       return Right(Result(value: res));
     }
   }
