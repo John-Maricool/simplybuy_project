@@ -52,6 +52,14 @@ class NotificationScreen extends StatelessWidget {
   }
 
   Widget emptyNotification(BuildContext context) {
-    return Container();
+    return Container(
+        padding: const EdgeInsets.all(defaultPadding),
+        width: MediaQuery.of(context).size.width * 0.5,
+        height: MediaQuery.of(context).size.height * 0.5,
+        child: Column(children: const [
+          Icon(Icons.notifications, size: 50),
+          Text('No notification yet', style: TextStyle()),
+          Text('Stay tuned!', style: TextStyle())
+        ]));
   }
 }

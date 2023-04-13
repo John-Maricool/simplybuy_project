@@ -339,36 +339,39 @@ Widget _productTexts(
         elevation: 3,
         child: Row(children: [
           Expanded(
-              child: Container(
-            width: 80,
-            decoration: const BoxDecoration(
-              color: Color.fromRGBO(67, 64, 65, 0.5),
-              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5)),
-            ),
-            child: Column(
-              children: [
-                Text(
-                  name,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  softWrap: false,
-                  style: const TextStyle(
-                      color: whiteColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold),
+              child: Opacity(
+            opacity: 0.5,
+            child: Container(
+                width: 80,
+                decoration: const BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius:
+                      BorderRadius.only(bottomLeft: Radius.circular(5)),
                 ),
-                Text(
-                  "₦$price View ",
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  softWrap: false,
-                  style: const TextStyle(
-                      color: whiteColor,
-                      fontSize: smallerTextFontSize,
-                      fontWeight: FontWeight.bold),
-                )
-              ],
-            ),
+                child: Column(
+                  children: [
+                    Text(
+                      name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: false,
+                      style: const TextStyle(
+                          color: whiteColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "₦$price View ",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: false,
+                      style: const TextStyle(
+                          color: whiteColor,
+                          fontSize: smallerTextFontSize,
+                          fontWeight: FontWeight.bold),
+                    )
+                  ],
+                )),
           )),
           GestureDetector(
             onTap: addToCart,
@@ -502,6 +505,22 @@ Widget imageSlidersProduct(BuildContext context, List<String> images) {
       );
     }).toList(),
   );
+}
+
+Widget Indicator(int currentIndex, int count) {
+  return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(count, (index) {
+        return Container(
+          width: 8.0,
+          height: 8.0,
+          margin: EdgeInsets.symmetric(horizontal: 2.0),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: currentIndex == index ? Colors.red : Colors.grey,
+          ),
+        );
+      }));
 }
 
 Widget iconAsBtn(VoidCallback onPressed) {

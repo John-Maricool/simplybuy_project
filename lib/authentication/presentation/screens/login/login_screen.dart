@@ -65,7 +65,8 @@ class LoginForm extends StatelessWidget {
               text: "New here?",
               clickableText: " Sign up",
               onClicked: () {
-                Get.toNamed(SIGNUP_ROUTE);
+                //  Get.toNamed(SIGNUP_ROUTE);
+                Get.toNamed(BUSINESS_DETAILS_SCREEN);
               }),
         )
       ],

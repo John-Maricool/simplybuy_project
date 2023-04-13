@@ -65,9 +65,12 @@ Widget clickableSmallButton(
 }
 
 Widget imageFromAssetsFolder(
-    {required double width, required double height, required String path}) {
+    {required double width,
+    required double height,
+    required String path,
+    double padding = 15}) {
   return Container(
-    padding: const EdgeInsets.all(15.0),
+    padding: EdgeInsets.all(padding),
     child: Image.asset(
       path,
       height: height,
