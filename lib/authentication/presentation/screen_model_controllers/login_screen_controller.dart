@@ -2,12 +2,12 @@ import 'package:get/get.dart';
 import 'package:simplibuy/authentication/domain/entities/login_details.dart';
 import 'package:simplibuy/authentication/domain/usecases/login_usecase.dart';
 import 'package:simplibuy/core/constants/route_constants.dart';
+import 'package:simplibuy/core/prefs/shared_prefs.dart';
 import 'package:simplibuy/core/validators/validators_string.dart';
 import '../../../core/state/state.dart';
 
 class LoginScreenController extends GetxController with ValidatorMixin {
   final LoginUsecase _usecase;
-
   final RxString _emailError = "".obs;
   final RxString _passwordError = "".obs;
   final RxBool _isVisible = true.obs;
@@ -36,7 +36,13 @@ class LoginScreenController extends GetxController with ValidatorMixin {
       if (result.isLeft) {
         _state.value = ErrorState(errorType: result.left.error);
       } else {
-        Get.offAllNamed(BUYER_HOME_PAGE_ROUTE);
+        await SharedPrefs.initializeSharedPrefs();
+        final type = SharedPrefs.userType();
+        if (type == TYPEBUYER) {
+          Get.offAllNamed(BUYER_HOME_PAGE_ROUTE);
+        } else {
+          Get.offAllNamed(SELLER_HOME_PAGE_ROUTE);
+        }
       }
     }
   }

@@ -30,7 +30,9 @@ class PlanScreen extends StatelessWidget {
                 style:
                     TextStyle(color: blueColor, fontSize: smallTextFontSize)),
             const Padding(padding: EdgeInsets.only(top: 10)),
-            singlePlanOption(context, "FREE", blueColor, freePts, () {}),
+            singlePlanOption(context, "FREE", blueColor, freePts, () {
+              Get.toNamed(SELLER_HOME_PAGE_ROUTE);
+            }),
             const Padding(padding: EdgeInsets.only(top: 10)),
             singlePlanOption(context, "PRO", Colors.red, paidPts, () {
               Get.toNamed(PRO_PLAN_CHOICE_SCREEN);

@@ -51,11 +51,11 @@ class BuyerBottomNavScreen extends StatelessWidget {
       );
     });
   }
+}
 
-  BottomNavigationBarItem bottomNavItem(IconData data, String label) {
-    return BottomNavigationBarItem(
-      icon: Icon(data),
-      label: label,
-    );
-  }
+BottomNavigationBarItem bottomNavItem(IconData data, String label) {
+  return BottomNavigationBarItem(
+    icon: Icon(data),
+    label: label,
+  );
 }

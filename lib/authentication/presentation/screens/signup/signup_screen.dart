@@ -189,8 +189,8 @@ class SignUpForm extends StatelessWidget {
         const Align(
           alignment: Alignment.bottomLeft,
           child: Text('Confirm Password',
-              style: const TextStyle(
-                  color: blackColor, fontSize: smallerTextFontSize)),
+              style:
+                  TextStyle(color: blackColor, fontSize: smallerTextFontSize)),
         ),
         Obx(
           () {

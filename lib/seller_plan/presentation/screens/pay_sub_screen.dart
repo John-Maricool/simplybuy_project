@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:get/get.dart';
 import 'package:simplibuy/core/constant.dart';
+import 'package:simplibuy/core/constants/route_constants.dart';
 import 'package:simplibuy/core/reusable_widgets/custom_dialog.dart';
 import 'package:simplibuy/core/reusable_widgets/reusable_widgets.dart';
 
@@ -113,7 +114,7 @@ void showPaidDialog(BuildContext context) {
     builder: (BuildContext context) {
       return CustomDialog(
         callback: () {
-          // Get.toNamed(PLAN_CHOICE_SCREEN);
+          Get.toNamed(SELLER_HOME_PAGE_ROUTE);
         },
         icon: Icons.check_circle_outline_rounded,
         buttonText: "Start Seling",

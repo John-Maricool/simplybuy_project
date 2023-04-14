@@ -18,11 +18,14 @@ import 'package:simplibuy/notification/presentation/binding/notification_binding
 import 'package:simplibuy/on_boarding/splash_screen.dart';
 import 'package:simplibuy/on_boarding/user_first_time.dart';
 import 'package:simplibuy/on_boarding/user_type.dart';
+import 'package:simplibuy/orders/presentation/screens/orders_screens.dart';
 import 'package:simplibuy/profile/presentation/binding/profile_screen_binding.dart';
 import 'package:simplibuy/profile/presentation/screens/profile_screen.dart';
 import 'package:simplibuy/reserve/presentation/bindings/reserve_binding.dart';
 import 'package:simplibuy/reserve/presentation/screens/reserve_screen.dart';
 import 'package:simplibuy/reserve/presentation/screens/reserve_screen_completion.dart';
+import 'package:simplibuy/seller_home/presentation/bindings/seller_home_bindings.dart';
+import 'package:simplibuy/seller_home/presentation/screens/seller_home.dart';
 import 'package:simplibuy/seller_plan/presentation/screens/confirm_pro_sub.dart';
 import 'package:simplibuy/seller_plan/presentation/screens/pay_sub_screen.dart';
 import 'package:simplibuy/seller_plan/presentation/screens/plans.dart';
@@ -145,5 +148,10 @@ class MyApp extends StatelessWidget {
       page: () => PaySubScreen(),
       arguments: "price",
     ),
+    GetPage(
+        name: SELLER_HOME_PAGE_ROUTE,
+        page: () => SellerHomeDrawers(),
+        binding: SellerHomeBindings()),
+    GetPage(name: ORDERS_SCREEN, page: () => OrdersScreen())
   ];
 }

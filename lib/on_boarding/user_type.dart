@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simplibuy/core/constants/route_constants.dart';
+import 'package:simplibuy/core/prefs/shared_prefs.dart';
 import 'package:simplibuy/core/reusable_widgets/reusable_widgets.dart';
 import 'package:simplibuy/core/constant.dart';
 import 'package:get/get.dart';
@@ -48,15 +49,19 @@ class UserType extends StatelessWidget {
           Positioned(
             bottom: -100,
             left: 25,
-            child: start(context, () {
-              Get.toNamed(LOGIN_ROUTE);
+            child: start(context, () async {
+              await SharedPrefs.initializeSharedPrefs();
+              SharedPrefs.setUserType(TYPEBUYER)
+                  .then((value) => {Get.toNamed(LOGIN_ROUTE)});
             }, "assets/on_boarding/on_buying.png", "Start Buying"),
           ),
           Positioned(
             bottom: -100,
             right: 25,
-            child: start(context, () {
-              Get.toNamed(LOGIN_ROUTE);
+            child: start(context, () async {
+              await SharedPrefs.initializeSharedPrefs();
+              SharedPrefs.setUserType(TYPESELLER)
+                  .then((value) => {Get.toNamed(LOGIN_ROUTE)});
             }, "assets/on_boarding/on_selling.png", "Start Selling"),
           ),
           const Padding(

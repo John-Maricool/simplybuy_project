@@ -59,14 +59,16 @@ class LoginForm extends StatelessWidget {
           padding: EdgeInsets.only(top: defaultPadding),
         ),
         submitButton(),
+        const Padding(
+          padding: EdgeInsets.only(top: defaultPadding),
+        ),
         Align(
           alignment: Alignment.bottomCenter,
           child: ordinaryAndClickableText(
               text: "New here?",
               clickableText: " Sign up",
               onClicked: () {
-                //  Get.toNamed(SIGNUP_ROUTE);
-                Get.toNamed(BUSINESS_DETAILS_SCREEN);
+                Get.toNamed(SIGNUP_ROUTE);
               }),
         )
       ],
