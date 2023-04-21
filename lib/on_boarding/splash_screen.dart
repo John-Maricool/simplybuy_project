@@ -16,7 +16,8 @@ class _MyHomePageState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3), () => Get.toNamed(USER_FIRST_TIME));
+    Timer(
+        const Duration(seconds: 3), () => Get.toNamed(BUSINESS_DETAILS_SCREEN));
   }
 
   @override

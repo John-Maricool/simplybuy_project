@@ -94,8 +94,9 @@ class SellerHomeScreen extends StatelessWidget {
                 MediaQuery.of(context).size.width * 0.4,
                 Color.fromARGB(255, 189, 231, 191),
                 Icons.production_quantity_limits,
-                "Add New Product",
-                () {})
+                "Add New Product", () {
+              Get.toNamed(ADD_NEW_PRODUCT);
+            })
           ],
         ),
         const Padding(padding: EdgeInsets.only(top: 20)),
@@ -103,8 +104,9 @@ class SellerHomeScreen extends StatelessWidget {
             MediaQuery.of(context).size.width,
             Color.fromARGB(255, 236, 187, 183),
             Icons.card_giftcard,
-            "View Products",
-            () {}),
+            "View Products", () {
+          Get.toNamed(SELLER_PRODUCT_CATEGORIES);
+        }),
         const Padding(padding: EdgeInsets.only(top: 20)),
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,

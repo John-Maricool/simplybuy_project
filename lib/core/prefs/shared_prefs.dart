@@ -14,8 +14,17 @@ class SharedPrefs {
   static Future<void> setUserType(String type) async {
     await prefs?.setString(USERTYPE, type);
   }
+
+  static String userId() {
+    return prefs?.getString(USERID) ?? "1111";
+  }
+
+  static Future<void> setUserId(String id) async {
+    await prefs?.setString(USERID, id);
+  }
 }
 
 const USERTYPE = "usertype";
 const TYPEBUYER = "Buyer";
 const TYPESELLER = "Seller";
+const USERID = "uid";

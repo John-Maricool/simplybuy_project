@@ -1,23 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:simplibuy/buyer_home/presentation/screens/custom_widgets.dart';
 import 'package:simplibuy/core/constant.dart';
+import 'package:simplibuy/core/error_types/error_types.dart';
 import 'package:simplibuy/core/reusable_widgets/reusable_widgets.dart';
+import 'package:simplibuy/core/state/state.dart';
+import 'package:simplibuy/orders/presentation/controllers/orders_controllers.dart';
+import 'package:simplibuy/orders/presentation/screens/custom_widgets.dart';
 
 class OrdersScreen extends StatelessWidget {
+  OrdersScreen({Key? key}) : super(key: key);
+  final OrdersController controller = Get.find<OrdersController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 243, 243, 243),
       appBar: customAppBar(
           text: "Back",
           onPressed: () {
             Get.back();
           }),
       body: Container(
-        padding: EdgeInsets.all(defaultPadding),
+        padding: const EdgeInsets.all(10),
         alignment: Alignment.center,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [orderButtons(context), itemsList()],
+          children: [
+            orderButtons(context),
+            const Padding(padding: EdgeInsets.only(top: 20)),
+            Obx(() {
+              if (controller.state is LoadingState) {
+                return defaultLoading(context);
+              }
+              if (controller.state == ErrorState(errorType: InternetError())) {
+                return noInternet(() {
+                  controller.reload();
+                });
+              }
+              if (controller.state == ErrorState(errorType: EmptyListError())) {
+                return emptyOrder();
+              }
+              if (controller.state == ErrorState(errorType: ServerError())) {
+                return noInternet(() {
+                  controller.reload();
+                });
+              }
+              if (controller.isIncoming) {
+                return icomingOrdersList(context);
+              } else {
+                return acceptedOrdersList();
+              }
+            })
+          ],
         ),
       ),
     );
@@ -41,35 +76,73 @@ class OrdersScreen extends StatelessWidget {
                   color: whiteColor,
                   borderRadius: BorderRadius.circular(2.0),
                 ),
-                child: Text(
-                  "Incoming Orders",
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    color: blackColor.withOpacity(0.8),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                child: GestureDetector(onTap: () {
+                  controller.getIncomingOrders();
+                }, child: Obx(() {
+                  return Text(
+                    "Incoming Orders",
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: controller.isIncoming
+                          ? blueColor
+                          : blackColor.withOpacity(0.8),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  );
+                })),
               ),
-              Padding(padding: EdgeInsets.only(left: 6)),
+              const Padding(padding: EdgeInsets.only(left: 6)),
               Container(
-                padding: EdgeInsets.all(6.0),
+                padding: const EdgeInsets.all(6.0),
                 decoration: BoxDecoration(
                   color: whiteColor,
                   borderRadius: BorderRadius.circular(2.0),
                 ),
-                child: Text(
-                  "Accepted Orders",
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    color: blackColor.withOpacity(0.8),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                child: GestureDetector(onTap: () {
+                  controller.getAcceptedOrders();
+                }, child: Obx(() {
+                  return Text(
+                    "Accepted Orders",
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: controller.isIncoming
+                          ? blackColor.withOpacity(0.8)
+                          : blueColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  );
+                })),
               )
             ]));
   }
 
-  Widget itemsList() {
-    return Container();
+  Widget icomingOrdersList(BuildContext context) {
+    return Obx(() {
+      return Expanded(
+          child: ListView.separated(
+              separatorBuilder: (context, value) {
+                return const Padding(padding: EdgeInsets.only(top: 12));
+              },
+              itemCount: controller.incomingOrdersList.length,
+              itemBuilder: (context, position) {
+                return singleIncomingOrder(
+                    context, controller.incomingOrdersList[position], () {});
+              }));
+    });
+  }
+
+  Widget acceptedOrdersList() {
+    return Obx(() {
+      return Expanded(
+          child: ListView.separated(
+              separatorBuilder: (context, value) {
+                return const Padding(padding: EdgeInsets.only(top: 12));
+              },
+              itemCount: controller.acceptedOrdersList.length,
+              itemBuilder: (context, position) {
+                return singleAcceptedOrder(
+                    context, controller.acceptedOrdersList[position], () {});
+              }));
+    });
   }
 }

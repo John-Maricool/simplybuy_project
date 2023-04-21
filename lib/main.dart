@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:simplibuy/add_new_product/presentation/screens/add_new_product.dart';
 import 'package:simplibuy/authentication/presentation/screen_bindings/login_screen_binding.dart';
 import 'package:simplibuy/authentication/presentation/screen_bindings/signup_screen_binding.dart';
+import 'package:simplibuy/authentication/presentation/screen_bindings/verify_email_binding.dart';
 import 'package:simplibuy/authentication/presentation/screens/business_details/business_details_screen.dart';
 import 'package:simplibuy/authentication/presentation/screens/login/login_screen.dart';
 import 'package:simplibuy/authentication/presentation/screens/signup/signup_screen.dart';
+import 'package:simplibuy/authentication/presentation/screens/verify_email/verify_email.dart';
 import 'package:simplibuy/buyer_home/presentation/bindings/buyer_home_bottom_nav_screens_bindings.dart';
-import 'package:simplibuy/buyer_home/presentation/screens/buyer_screen.dart';
 import 'package:simplibuy/buyer_home/presentation/screens/stores_and_malls_screen.dart';
 import 'package:simplibuy/cart/presentation/screens/cart_list_screen.dart';
 import 'package:simplibuy/core/constant.dart';
@@ -18,6 +20,7 @@ import 'package:simplibuy/notification/presentation/binding/notification_binding
 import 'package:simplibuy/on_boarding/splash_screen.dart';
 import 'package:simplibuy/on_boarding/user_first_time.dart';
 import 'package:simplibuy/on_boarding/user_type.dart';
+import 'package:simplibuy/orders/presentation/bindings/orders_bindings.dart';
 import 'package:simplibuy/orders/presentation/screens/orders_screens.dart';
 import 'package:simplibuy/profile/presentation/binding/profile_screen_binding.dart';
 import 'package:simplibuy/profile/presentation/screens/profile_screen.dart';
@@ -30,6 +33,8 @@ import 'package:simplibuy/seller_plan/presentation/screens/confirm_pro_sub.dart'
 import 'package:simplibuy/seller_plan/presentation/screens/pay_sub_screen.dart';
 import 'package:simplibuy/seller_plan/presentation/screens/plans.dart';
 import 'package:simplibuy/seller_plan/presentation/screens/pro_plan.dart';
+import 'package:simplibuy/seller_product_categories/presentation/screens/seller_product_categories_screen.dart';
+import 'package:simplibuy/seller_products/presentation/screens/seller_products_screen.dart';
 import 'package:simplibuy/store_and_product/presentation/binding/product_binding.dart';
 import 'package:simplibuy/store_and_product/presentation/binding/products_list_binding.dart';
 import 'package:simplibuy/store_and_product/presentation/binding/store_info_binding.dart';
@@ -84,6 +89,12 @@ class MyApp extends StatelessWidget {
         name: SIGNUP_ROUTE,
         page: () => SignUpForm(),
         binding: SignupScreenBinding()),
+    GetPage(
+        name: VERIFY_EMAIL,
+        page: () => VerifyEmail(),
+        binding: VerifyEmailBinding(),
+        arguments: "email"),
+
     GetPage(
         name: PROFILE_SCREEN,
         page: () => ProfileScreen(),
@@ -152,6 +163,22 @@ class MyApp extends StatelessWidget {
         name: SELLER_HOME_PAGE_ROUTE,
         page: () => SellerHomeDrawers(),
         binding: SellerHomeBindings()),
-    GetPage(name: ORDERS_SCREEN, page: () => OrdersScreen())
+    GetPage(
+      name: ORDERS_SCREEN,
+      page: () => OrdersScreen(),
+      binding: OrdersBindings(),
+    ),
+    GetPage(
+      name: ADD_NEW_PRODUCT,
+      page: () => AddNewProductScreen(),
+    ),
+    GetPage(
+      name: SELLER_PRODUCT_CATEGORIES,
+      page: () => SellerProductCategoriesScreen(),
+    ),
+    GetPage(
+      name: SELLER_PRODUCTS,
+      page: () => SellerProductsScreens(),
+    )
   ];
 }

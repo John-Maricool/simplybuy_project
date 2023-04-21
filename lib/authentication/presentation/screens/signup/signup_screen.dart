@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simplibuy/authentication/presentation/screen_model_controllers/signup_screen_controller.dart';
+import 'package:simplibuy/authentication/presentation/screens/custom_widgets.dart';
 import 'package:simplibuy/core/constants/route_constants.dart';
 import 'package:simplibuy/core/error_types/error_types.dart';
 import 'package:simplibuy/core/reusable_widgets/reusable_widgets.dart';
@@ -19,12 +20,7 @@ class SignUpForm extends StatelessWidget {
     return Scaffold(
         body: Container(
             margin: const EdgeInsets.all(defaultPadding),
-            child: SingleChildScrollView(child: Obx(() {
-              if (controller.state is LoadingState) {
-                return defaultLoading(context);
-              }
-              return signUp(context);
-            }))));
+            child: SingleChildScrollView(child: signUp(context))));
   }
 
   Widget signUp(BuildContext context) {
@@ -70,10 +66,25 @@ class SignUpForm extends StatelessWidget {
             text: "Already have an account?",
             clickableText: " Sign in",
             onClicked: () {
-              Get.toNamed(LOGIN_ROUTE);
-            })
+              Get.offNamed(LOGIN_ROUTE);
+              Get.delete<SignupScreenController>();
+            }),
+        showLoadingOrServerError(context),
       ],
     );
+  }
+
+  Widget showLoadingOrServerError(BuildContext context) {
+    return Obx(() {
+      if (controller.state is LoadingState) {
+        return defaultLoading(context);
+      }
+      if (controller.state == ErrorState(errorType: ServerError())) {
+        final err = (controller.state as ErrorState).getErrorMessage();
+        errorToast(err);
+      }
+      return Container();
+    });
   }
 
   Widget signUpText() {
@@ -153,8 +164,8 @@ class SignUpForm extends StatelessWidget {
         const Align(
           alignment: Alignment.bottomLeft,
           child: Text('Enter Password',
-              style: const TextStyle(
-                  color: blackColor, fontSize: smallerTextFontSize)),
+              style:
+                  TextStyle(color: blackColor, fontSize: smallerTextFontSize)),
         ),
         Obx(
           () {

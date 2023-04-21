@@ -2,6 +2,7 @@
 const LOGIN_ROUTE = '/login';
 const SINGLE_STORE_ROUTE = '/store';
 const SIGNUP_ROUTE = '/signup';
+const VERIFY_EMAIL = '/verify_email';
 const BUYER_HOME_PAGE_ROUTE = '/buyer_home';
 const SELLER_HOME_PAGE_ROUTE = '/seller_home';
 const STORES_LIST_ROUTE = '/stores_list';
@@ -22,3 +23,6 @@ const PRO_PLAN_CHOICE_SCREEN = "/pro_plan_choice_screen";
 const CONFIRM_PRO_SUB_SCREEN = "/confirm_pro_sub_screen";
 const PAY_SUB_SCREEN = "/pay_sub_screen";
 const ORDERS_SCREEN = "/orders";
+const ADD_NEW_PRODUCT = "/add_new_product";
+const SELLER_PRODUCT_CATEGORIES = "/seller_product_categories";
+const SELLER_PRODUCTS = "/seller_product";

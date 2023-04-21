@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:simplibuy/authentication/presentation/screens/custom_widgets.dart';
 import 'package:simplibuy/authentication/presentation/screens/forgot_password/forgot_password.dart';
 import 'package:simplibuy/core/constants/route_constants.dart';
 import 'package:simplibuy/core/reusable_widgets/reusable_widgets.dart';
@@ -24,12 +25,7 @@ class LoginForm extends StatelessWidget {
             height: MediaQuery.of(context).size.height,
             margin: const EdgeInsets.all(defaultPadding),
             // child: Center(
-            child: SingleChildScrollView(child: Obx(() {
-              if (controller.state is LoadingState) {
-                return defaultLoading(context);
-              }
-              return login(context);
-            }))));
+            child: SingleChildScrollView(child: login(context))));
   }
 
   Widget login(BuildContext context) {
@@ -52,8 +48,10 @@ class LoginForm extends StatelessWidget {
         const Padding(
           padding: EdgeInsets.only(top: defaultPadding),
         ),
-        forgotPassword(() {
+        forgotPasswordAndVerifyEmail(() {
           Get.to(const ForgotPassword());
+        }, () {
+          controller.resendOtp();
         }),
         const Padding(
           padding: EdgeInsets.only(top: defaultPadding),
@@ -68,24 +66,48 @@ class LoginForm extends StatelessWidget {
               text: "New here?",
               clickableText: " Sign up",
               onClicked: () {
-                Get.toNamed(SIGNUP_ROUTE);
+                Get.delete<LoginScreenController>();
+                Get.offNamed(SIGNUP_ROUTE);
               }),
-        )
+        ),
+        showLoadingOrServerError(context),
       ],
     );
   }
 
-  Widget forgotPassword(VoidCallback onClick) {
-    return Align(
-        alignment: Alignment.bottomLeft,
-        child: RichText(
-            text: TextSpan(
-                text: "Forgot Password?",
-                style: const TextStyle(
-                    color: blueColor,
-                    fontSize: smallerTextFontSize,
-                    fontWeight: FontWeight.bold),
-                recognizer: TapGestureRecognizer()..onTap = onClick)));
+  Widget showLoadingOrServerError(BuildContext context) {
+    return Obx(() {
+      if (controller.state is LoadingState) {
+        return defaultLoading(context);
+      }
+      if (controller.state == ErrorState(errorType: ServerError())) {
+        final err = (controller.state as ErrorState).getErrorMessage();
+        errorToast(err);
+      }
+      return Container();
+    });
+  }
+
+  Widget forgotPasswordAndVerifyEmail(
+      VoidCallback onClick, VoidCallback verifyClicked) {
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+      RichText(
+          text: TextSpan(
+              text: "Forgot Password?",
+              style: const TextStyle(
+                  color: blueColor,
+                  fontSize: smallerTextFontSize,
+                  fontWeight: FontWeight.bold),
+              recognizer: TapGestureRecognizer()..onTap = onClick)),
+      RichText(
+          text: TextSpan(
+              text: "Verify Email",
+              style: const TextStyle(
+                  color: blueColor,
+                  fontSize: smallerTextFontSize,
+                  fontWeight: FontWeight.bold),
+              recognizer: TapGestureRecognizer()..onTap = verifyClicked))
+    ]);
   }
 
   Widget signIn() {

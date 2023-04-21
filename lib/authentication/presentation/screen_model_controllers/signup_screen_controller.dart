@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:simplibuy/authentication/domain/entities/signup_details.dart';
 import 'package:simplibuy/authentication/domain/usecases/signup_usecase.dart';
 import 'package:simplibuy/core/constants/route_constants.dart';
-import 'package:simplibuy/core/prefs/shared_prefs.dart';
 import 'package:simplibuy/core/validators/validators_string.dart';
 import '../../../core/state/state.dart';
 
@@ -41,20 +40,22 @@ class SignupScreenController extends GetxController with ValidatorMixin {
       final result = await _usecase.sendAuthDetails(
           SignupDetail(email: _email, password: _password, name: _name));
       if (result.isLeft) {
-        _state.value = ErrorState(errorType: result.left.error);
+        final err = ErrorState(errorType: result.left.error);
+        err.setErrorMessage(result.left.message);
+        _state.value = err;
       } else {
-        await SharedPrefs.initializeSharedPrefs();
-        final type = SharedPrefs.userType();
-        if (type == TYPEBUYER) {
-          Get.offAllNamed(BUYER_HOME_PAGE_ROUTE);
-        } else {
-          Get.offAllNamed(BUSINESS_DETAILS_SCREEN);
-        }
+        Get.toNamed(VERIFY_EMAIL, arguments: _email);
+        Get.delete<SignupScreenController>();
       }
     }
   }
 
+  resetState() {
+    _state.value = const State();
+  }
+
   addEmail(String data) {
+    resetState();
     _email = data;
     _emailError.value = getEmailErrors(data);
   }

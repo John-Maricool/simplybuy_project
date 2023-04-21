@@ -35,6 +35,8 @@ dependencies:
   carousel_indicator: ^1.0.6
   http: ^0.13.5
   flutter_rating_bar: ^4.0.1
+  #toast
+  fluttertoast: ^8.0.8
   equatable: ^2.0.3
   flutter_signin_button: ^2.0.0
   material_design_icons_flutter: ^5.0.6996

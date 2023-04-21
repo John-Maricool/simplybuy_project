@@ -27,12 +27,20 @@ class FinishedState extends State implements Equatable {
 
 class ErrorState extends State implements Equatable {
   final ErrorType errorType;
-
-  const ErrorState({required this.errorType});
+  String _errMessage = "Err";
+  ErrorState({required this.errorType});
 
   @override
   List<Object> get props => [errorType];
 
   @override
   bool? get stringify => true;
+
+  String getErrorMessage() {
+    return _errMessage;
+  }
+
+  setErrorMessage(String msg) {
+    _errMessage = msg;
+  }
 }

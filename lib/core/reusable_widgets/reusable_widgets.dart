@@ -19,12 +19,11 @@ Widget defaultButtons(
 Widget defaultLoading(BuildContext context) {
   return SizedBox(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
       child: Center(
         child: Image.asset(
           "assets/gifs/simpliby_loading.gif",
-          height: 100.0,
-          width: 100.0,
+          height: 80.0,
+          width: 80.0,
         ),
       ));
 }
@@ -110,7 +109,7 @@ PreferredSizeWidget customAppBar(
       text,
       style: const TextStyle(color: blackColor, fontSize: 18.0),
     ),
-    backgroundColor: whiteColor,
+    backgroundColor: Colors.transparent,
     actions: actions,
     automaticallyImplyLeading: false,
     leading: IconButton(

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:simplibuy/authentication/data/datasources/registration_datasource.dart';
 import 'package:simplibuy/authentication/data/repositories/signup_repository_impl.dart';
 import 'package:simplibuy/authentication/domain/usecases/signup_usecase.dart';
 import 'package:simplibuy/authentication/presentation/screen_model_controllers/signup_screen_controller.dart';
@@ -8,8 +9,9 @@ class SignupScreenBinding implements Bindings {
   @override
   void dependencies() {
     NetworkInfoImpl info = Get.find();
-    SignupRepositoryImpl repository =
-        Get.put(SignupRepositoryImpl(networkInfo: info));
+    RegistrationDataSource dataSource = Get.put(RegistrationDataSource());
+    SignupRepositoryImpl repository = Get.put(
+        SignupRepositoryImpl(networkInfo: info, dataSource: dataSource));
     SignupUsecase usecase = Get.put(SignupUsecase(repository));
     Get.put<SignupScreenController>(SignupScreenController(usecase));
   }
