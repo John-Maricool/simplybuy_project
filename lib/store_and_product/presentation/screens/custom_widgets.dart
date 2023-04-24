@@ -68,20 +68,14 @@ Widget searchInput(VoidCallback onPressed) {
 }
 
 Widget storeDescription({required String desc}) {
-  return Container(
-      padding: const EdgeInsets.only(left: 10, right: 10),
-      child: Align(
-          alignment: Alignment.centerLeft,
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const Text(
-              'About',
-              style:
-                  TextStyle(color: Colors.grey, fontSize: smallerTextFontSize),
-              textAlign: TextAlign.start,
-            ),
-            Text(desc, style: const TextStyle(color: blackColor, fontSize: 17))
-          ])));
+  return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    const Text(
+      'About',
+      style: TextStyle(color: Colors.grey, fontSize: smallerTextFontSize),
+      textAlign: TextAlign.start,
+    ),
+    Text(desc, style: const TextStyle(color: blackColor, fontSize: 17))
+  ]);
 }
 
 Widget _titleAndIcon(
@@ -104,24 +98,22 @@ Widget _titleAndIcon(
 
 Widget storeContactDetails(
     {required String email, required String phoneNumber}) {
-  return Container(
-      padding: const EdgeInsets.only(left: 10, right: 10),
-      child: Row(children: [
-        Expanded(
-            child: Align(
-                alignment: Alignment.centerLeft,
-                child: _titleAndIcon(data: Icons.copy_all_sharp, text: email))),
-        Expanded(
-            child: Align(
-                alignment: Alignment.centerRight,
-                child: _titleAndIcon(
-                    data: Icons.phone_android_sharp, text: phoneNumber)))
-      ]));
+  return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _titleAndIcon(data: Icons.link, text: email),
+        _titleAndIcon(data: Icons.call, text: phoneNumber)
+      ]);
 }
 
-Widget storeFollowers({required int followers}) {
+Widget storeFollowers(
+    {required int followers,
+    BoxDecoration? decoration,
+    Color color = blackColor}) {
   return Container(
-      padding: const EdgeInsets.only(left: 10, right: 10),
+      padding: const EdgeInsets.all(10),
+      decoration: decoration,
       child: RichText(
         text: TextSpan(
           style:
@@ -129,14 +121,13 @@ Widget storeFollowers({required int followers}) {
           children: <TextSpan>[
             TextSpan(
                 text: followers.toString(),
-                style: const TextStyle(
-                    color: blackColor,
+                style: TextStyle(
+                    color: color,
                     fontSize: smallTextFontSize,
                     fontWeight: FontWeight.bold)),
-            const TextSpan(
+            TextSpan(
                 text: 'Followers',
-                style: TextStyle(
-                    color: blackColor, fontSize: smallerTextFontSize)),
+                style: TextStyle(color: color, fontSize: smallerTextFontSize)),
           ],
         ),
       ));
@@ -224,11 +215,10 @@ Widget imageSliders(BuildContext context, List<String> images) {
                 fit: BoxFit.fill,
                 placeholder: defaultStoreImage,
                 imageErrorBuilder: (context, error, stackTrace) {
-                  return Image.asset(
-                    defaultStoreImage,
-                    width: 190,
-                    height: 190,
-                  );
+                  return Image.asset(defaultProductImage,
+                      width: MediaQuery.of(context).size.width,
+                      height: 120,
+                      fit: BoxFit.cover);
                 },
                 image: image),
           );

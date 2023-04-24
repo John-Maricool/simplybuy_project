@@ -28,33 +28,33 @@ class BusinessDetailsScreen extends StatelessWidget {
                   fontSize: smallTextFontSize,
                   fontWeight: FontWeight.w400)),
           padding,
-          businessCategory(
+          textFieldWithHeader(
               errorText: null,
               hintText: "eg. Simbi's enterprice",
               title: "Business Name",
               onChanged: (value) {}),
           padding,
-          businessCategory(
+          textFieldWithHeader(
               errorText: null,
               hintText: "eg. Enugu, Nigeria",
               title: "Business Location",
               onChanged: (value) {}),
           padding,
-          businessCategory(
+          textFieldWithHeader(
               errorText: null,
               hintText: "eg. We specialize in selling beauty soaps",
               title: "Brief description about your business",
               onChanged: (value) {},
               lines: 6),
           padding,
-          businessCategory(
+          textFieldWithHeader(
             errorText: null,
             hintText: "eg. Plot 13 New Heaven, Enugu",
             title: "Store Address",
             onChanged: (value) {},
           ),
           padding,
-          businessCategory(
+          textFieldWithHeader(
             errorText: null,
             hintText: "eg. Enugu State",
             title: "Store City",

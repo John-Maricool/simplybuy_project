@@ -4,6 +4,9 @@ import 'package:simplibuy/buyer_home/presentation/screens/buyer_home_drawers.dar
 import 'package:simplibuy/core/constant.dart';
 import 'package:simplibuy/seller_home/presentation/controllers/seller_home_nav_controller.dart';
 import 'package:simplibuy/seller_home/presentation/screens/seller_home_screen.dart';
+import 'package:simplibuy/seller_payments/presentation/screens/seller_payments_screen.dart';
+import 'package:simplibuy/seller_profile/presentation/screens/seller_profile_screen.dart';
+import 'package:simplibuy/settings/presentation/screens/settings_screen.dart';
 
 // ignore: must_be_immutable
 class SellerHomeDrawers extends StatelessWidget {
@@ -20,11 +23,11 @@ class SellerHomeDrawers extends StatelessWidget {
           if (controller.currentPage == 0) {
             return SellerHomeScreen();
           } else if (controller.currentPage == 1) {
-            return SellerHomeScreen();
+            return SellerPaymentsScreen();
           } else if (controller.currentPage == 2) {
-            return SellerHomeScreen();
+            return SettingsScreen();
           }
-          return SellerHomeScreen();
+          return SellerProfileScreen();
         }));
   }
 

@@ -26,24 +26,27 @@ Widget header() {
   ));
 }
 
-Widget businessCategory(
+Widget textFieldWithHeader(
     {required String title,
     required Function(String) onChanged,
     required String hintText,
     required String? errorText,
+    bool isReq = true,
     int lines = 1}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      _text(title),
+      _text(title, isRequired: isReq),
       TextField(
           onChanged: (business) {
             onChanged(business);
           },
           keyboardType: TextInputType.name,
           maxLines: lines,
-          decoration:
-              customInputDecoration(hint: hintText, errorText: errorText))
+          decoration: customInputDecoration(
+            hint: hintText,
+            errorText: errorText,
+          ))
     ],
   );
 }
@@ -117,13 +120,14 @@ Widget imageUpload(BuildContext context, String title) {
   ]);
 }
 
-Widget _text(String title) {
+Widget _text(String title, {bool isRequired = true}) {
   return RichText(
     text: TextSpan(
       style: const TextStyle(fontSize: 14),
       children: <TextSpan>[
         TextSpan(text: title, style: const TextStyle(color: blackColor)),
-        const TextSpan(text: '*', style: TextStyle(color: Colors.red)),
+        if (isRequired)
+          const TextSpan(text: '*', style: TextStyle(color: Colors.red)),
       ],
     ),
   );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simplibuy/add_bank/presentation/screens/add_bank_screen.dart';
 import 'package:simplibuy/add_new_product/presentation/screens/add_new_product.dart';
 import 'package:simplibuy/authentication/presentation/screen_bindings/login_screen_binding.dart';
 import 'package:simplibuy/authentication/presentation/screen_bindings/signup_screen_binding.dart';
@@ -12,6 +13,7 @@ import 'package:simplibuy/buyer_home/presentation/screens/stores_and_malls_scree
 import 'package:simplibuy/cart/presentation/screens/cart_list_screen.dart';
 import 'package:simplibuy/core/constant.dart';
 import 'package:simplibuy/core/constants/route_constants.dart';
+import 'package:simplibuy/create_promo_post/presentation/screens/create_promo_post_screen.dart';
 import 'package:simplibuy/history/presentation/screens/history_screen.dart';
 import 'package:simplibuy/main_binding.dart';
 import 'package:get/get.dart';
@@ -27,14 +29,18 @@ import 'package:simplibuy/profile/presentation/screens/profile_screen.dart';
 import 'package:simplibuy/reserve/presentation/bindings/reserve_binding.dart';
 import 'package:simplibuy/reserve/presentation/screens/reserve_screen.dart';
 import 'package:simplibuy/reserve/presentation/screens/reserve_screen_completion.dart';
+import 'package:simplibuy/seller_edit_profile/presentation/screens/seller_edit_profile_screen.dart';
 import 'package:simplibuy/seller_home/presentation/bindings/seller_home_bindings.dart';
 import 'package:simplibuy/seller_home/presentation/screens/seller_home.dart';
+import 'package:simplibuy/seller_payments/presentation/screens/seller_payments_screen.dart';
 import 'package:simplibuy/seller_plan/presentation/screens/confirm_pro_sub.dart';
 import 'package:simplibuy/seller_plan/presentation/screens/pay_sub_screen.dart';
 import 'package:simplibuy/seller_plan/presentation/screens/plans.dart';
 import 'package:simplibuy/seller_plan/presentation/screens/pro_plan.dart';
 import 'package:simplibuy/seller_product_categories/presentation/screens/seller_product_categories_screen.dart';
+import 'package:simplibuy/seller_product_detail/presentation/screens/seller_product_detail_screen.dart';
 import 'package:simplibuy/seller_products/presentation/screens/seller_products_screen.dart';
+import 'package:simplibuy/settings/presentation/screens/settings_screen.dart';
 import 'package:simplibuy/store_and_product/presentation/binding/product_binding.dart';
 import 'package:simplibuy/store_and_product/presentation/binding/products_list_binding.dart';
 import 'package:simplibuy/store_and_product/presentation/binding/store_info_binding.dart';
@@ -43,6 +49,7 @@ import 'package:simplibuy/store_and_product/presentation/screens/product_via_cat
 import 'package:simplibuy/store_and_product/presentation/screens/store_info_screen.dart';
 import 'package:simplibuy/to_buy_list/presentation/binding/to_buy_binding.dart';
 import 'package:simplibuy/to_buy_list/presentation/screens/to_buy_screen.dart';
+import 'package:simplibuy/withdraw/presentation/screens/withdraw_to_bank_screen.dart';
 
 import 'notification/presentation/screens/notification.dart';
 
@@ -179,6 +186,38 @@ class MyApp extends StatelessWidget {
     GetPage(
       name: SELLER_PRODUCTS,
       page: () => SellerProductsScreens(),
-    )
+    ),
+    GetPage(
+      name: SELLER_PRODUCT_DETAIL,
+      page: () => SellerProductDetailScreen(),
+    ),
+    GetPage(
+      name: SELLER_PAYMENTS,
+      page: () => SellerPaymentsScreen(),
+    ),
+    GetPage(
+      name: ADD_BANK_SCREEN,
+      page: () => AddBankScreen(),
+    ),
+    GetPage(
+      name: WITHDRAWAL_SCREEN,
+      page: () => WithdrawToBankScreen(),
+    ),
+    GetPage(
+      name: SELLER_PROFILE_SCREEN,
+      page: () => WithdrawToBankScreen(),
+    ),
+    GetPage(
+      name: SELLER_EDIT_PROFILE_SCREEN,
+      page: () => SellerEditProfileScreen(),
+    ),
+    GetPage(
+      name: CREATE_PROMO_POST_SCREEN,
+      page: () => CreatePromoPostScreen(),
+    ),
+    GetPage(
+      name: SETTINGS_SCREEN,
+      page: () => SettingsScreen(),
+    ),
   ];
 }

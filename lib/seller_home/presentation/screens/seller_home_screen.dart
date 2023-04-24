@@ -116,14 +116,16 @@ class SellerHomeScreen extends StatelessWidget {
                 MediaQuery.of(context).size.width * 0.4,
                 const Color.fromARGB(255, 137, 192, 238),
                 Icons.task_alt_outlined,
-                "Records",
-                () {}),
+                "Records", () {
+              Get.toNamed(HISTORY_SCREEN);
+            }),
             customContainerInv(
                 MediaQuery.of(context).size.width * 0.4,
                 const Color.fromARGB(255, 137, 192, 238),
                 Icons.payment_outlined,
-                "Payments",
-                () {})
+                "Payments", () {
+              Get.toNamed(SELLER_PAYMENTS);
+            })
           ],
         ),
       ],

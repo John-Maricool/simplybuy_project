@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simplibuy/core/constant.dart';
+import 'package:simplibuy/core/constants/route_constants.dart';
 import 'package:simplibuy/core/reusable_widgets/reusable_widgets.dart';
 
 class SellerProductsScreens extends StatelessWidget {
@@ -16,10 +17,16 @@ class SellerProductsScreens extends StatelessWidget {
           },
           actions: [
             PopupMenuButton<String>(
-                icon: const Icon(Icons.add_box_outlined, color: blackColor),
-                itemBuilder: (BuildContext context) {
-                  return actions;
-                })
+              icon: const Icon(Icons.add_box_outlined, color: blackColor),
+              itemBuilder: (BuildContext context) {
+                return actions;
+              },
+              onSelected: (val) {
+                if (val == "Add") {
+                  Get.toNamed(ADD_NEW_PRODUCT);
+                } else {}
+              },
+            )
           ]),
       body: Container(
         padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
@@ -41,12 +48,14 @@ class SellerProductsScreens extends StatelessWidget {
                     crossAxisCount: 2,
                     physics: const ScrollPhysics(),
                     crossAxisSpacing: 4.0,
-                    mainAxisSpacing: 6.0,
+                    mainAxisSpacing: 18.0,
                     shrinkWrap: true,
                     children: List.generate(
                         20,
-                        (index) =>
-                            Center(child: showItemsGrid(context, () {})))))
+                        (index) => Center(
+                                child: showItemsGrid(context, () {
+                              Get.toNamed(SELLER_PRODUCT_DETAIL);
+                            })))))
           ],
         ),
       ),

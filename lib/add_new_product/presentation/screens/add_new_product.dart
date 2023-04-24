@@ -23,43 +23,43 @@ class AddNewProductScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                businessCategory(
+                textFieldWithHeader(
                     title: "What do you want to sell?",
                     onChanged: (value) {},
                     hintText: "eg. XYZ biscuit",
                     errorText: null),
                 padding,
-                businessCategory(
+                textFieldWithHeader(
                     title: "Product description",
                     onChanged: (value) {},
                     hintText: "eg. 80kg made with milk and ice",
                     errorText: null),
                 padding,
-                businessCategory(
+                textFieldWithHeader(
                     title: "Item location (Optional)",
                     onChanged: (value) {},
                     hintText: "eg. Line A1 track B22",
                     errorText: null),
                 padding,
-                businessCategory(
+                textFieldWithHeader(
                     title: "Currency",
                     onChanged: (value) {},
                     hintText: "NGN (Naira)",
                     errorText: null),
                 padding,
-                businessCategory(
+                textFieldWithHeader(
                     title: "Item Price",
                     onChanged: (value) {},
                     hintText: "eg. 500",
                     errorText: null),
                 padding,
-                businessCategory(
+                textFieldWithHeader(
                     title: "Reservation price per product ",
                     onChanged: (value) {},
                     hintText: "eg. 20",
                     errorText: null),
                 padding,
-                businessCategory(
+                textFieldWithHeader(
                     title: "Product category",
                     onChanged: (value) {},
                     hintText: "Cosmetics",
